@@ -51,6 +51,8 @@ export function ScratchCard({ image, colorHex, revealed, onReveal }: ScratchCard
   const firedRef = useRef(false)
   const checkScheduled = useRef(false)
   const [done, setDone] = useState(revealed)
+  // A imagem fica invisível sob a cobertura até a raspagem começar.
+  const [started, setStarted] = useState(revealed)
   const reduced = useReducedMotion()
 
   const reveal = useCallback(() => {
@@ -118,7 +120,7 @@ export function ScratchCard({ image, colorHex, revealed, onReveal }: ScratchCard
           <img
             src={image.url}
             alt={done ? image.alt : ''}
-            className="absolute inset-0 size-full object-cover"
+            className={`absolute inset-0 size-full object-cover ${started || done ? '' : 'opacity-0'}`}
             draggable={false}
           />
         )}
@@ -145,6 +147,7 @@ export function ScratchCard({ image, colorHex, revealed, onReveal }: ScratchCard
             done ? 'pointer-events-none opacity-0' : 'cursor-pointer opacity-100',
           ].join(' ')}
           onPointerDown={(e) => {
+            setStarted(true)
             e.currentTarget.setPointerCapture?.(e.pointerId)
             last.current = null
             scratchTo(point(e))

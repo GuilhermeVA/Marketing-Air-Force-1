@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { applyAccent, Button, buttonClass, Screen, Spinner } from '../../ui'
 import { formatNextAvailable } from './api'
 import type { RedeemResult, ScratchApi, ScratchState } from './api'
+import { HomeShell } from './HomeShell'
 import { ScratchCard } from './ScratchCard'
 
 type ScratchHomeProps = {
@@ -91,13 +92,7 @@ export function ScratchHome({ api, isAnonymous, userKey }: ScratchHomeProps) {
     return () => applyAccent(null)
   }, [revealedColor])
 
-  if (view.kind === 'loading') {
-    return (
-      <Screen className="flex min-h-dvh items-center justify-center">
-        <Spinner label="Verificando sua raspadinha" />
-      </Screen>
-    )
-  }
+  if (view.kind === 'loading') return <HomeShell />
 
   if (view.kind === 'error') {
     return (

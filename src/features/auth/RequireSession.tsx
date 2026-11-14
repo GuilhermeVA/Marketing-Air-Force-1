@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Outlet } from 'react-router'
 import { Button, Screen, Spinner } from '../../ui'
 import { useAuth } from './context'
@@ -6,7 +7,7 @@ import { useAuth } from './context'
  * Só renderiza as telas filhas quando há sessão (anônima ou com conta), para
  * que nenhuma chamada ao banco aconteça antes disso.
  */
-export function RequireSession() {
+export function RequireSession({ fallback }: { fallback?: ReactNode } = {}) {
   const { user, loading, error, retry } = useAuth()
 
   if (error && !user) {
@@ -24,6 +25,7 @@ export function RequireSession() {
   }
 
   if (loading || !user) {
+    if (fallback) return <>{fallback}</>
     return (
       <Screen className="flex min-h-dvh items-center justify-center">
         <Spinner label="Preparando sua experiência" />

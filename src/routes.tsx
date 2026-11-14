@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react'
 import type { RouteObject } from 'react-router'
 import { RequireSession } from './features/auth'
+import { HomeShell } from './features/scratch/HomeShell'
 import { HomePage } from './pages/HomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { RouteLoading } from './pages/RouteLoading'
@@ -28,9 +29,13 @@ export const routes: RouteObject[] = [
     children: [
       {
         // Telas que dependem de sessão (anônima ou com conta).
+        // A página inicial mostra a própria estrutura enquanto a sessão carrega.
+        element: <RequireSession fallback={<HomeShell />} />,
+        children: [{ path: '/', element: <HomePage /> }],
+      },
+      {
         element: <RequireSession />,
         children: [
-          { path: '/', element: <HomePage /> },
           {
             path: '/cupom',
             ...page(() => import('./pages/CouponPage').then((m) => ({ default: m.CouponPage }))),
