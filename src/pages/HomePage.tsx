@@ -1,10 +1,10 @@
-import { Screen } from '../ui'
+import { useMemo } from 'react'
+import { useAuth } from '../features/auth'
+import { createScratchApi } from '../features/scratch/api'
+import { ScratchHome } from '../features/scratch/ScratchHome'
 
 export function HomePage() {
-  return (
-    <Screen>
-      <h1 className="text-3xl">Raspadinha</h1>
-      <p className="mt-2 text-sm text-mute">Em construção.</p>
-    </Screen>
-  )
+  const { client, user, isAnonymous } = useAuth()
+  const api = useMemo(() => createScratchApi(client), [client])
+  return <ScratchHome api={api} isAnonymous={isAnonymous} userKey={`${user?.id}:${isAnonymous}`} />
 }

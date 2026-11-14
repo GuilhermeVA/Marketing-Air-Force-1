@@ -58,9 +58,11 @@ export function fakeAuthClient(options: { session?: Session | null; anonError?: 
   const insert = vi.fn(async () => ({ error: null }))
   const upsert = vi.fn(async () => ({ error: null }))
   const from = vi.fn(() => ({ insert, upsert }))
+  const rpc = vi.fn(async () => ({ data: { status: 'all_unlocked' }, error: null }))
 
   return {
-    client: { auth, from } as unknown as SupabaseClient,
+    client: { auth, from, rpc } as unknown as SupabaseClient,
+    rpc,
     auth,
     from,
     insert,

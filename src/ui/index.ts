@@ -1,4 +1,5 @@
 export { Button } from './Button'
+export { buttonClass } from './buttonClass'
 export type { ButtonProps } from './Button'
 export { Screen } from './Screen'
 export { Spinner } from './Spinner'

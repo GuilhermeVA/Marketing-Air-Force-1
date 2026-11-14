@@ -35,6 +35,65 @@ export type Database = {
         }
         Relationships: []
       }
+      af1_scratches: {
+        Row: {
+          coupon_id: string | null
+          created_at: string
+          id: string
+          redeemed_at: string | null
+          revealed_at: string | null
+          sneaker_id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          coupon_id?: string | null
+          created_at?: string
+          id?: string
+          redeemed_at?: string | null
+          revealed_at?: string | null
+          sneaker_id: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          coupon_id?: string | null
+          created_at?: string
+          id?: string
+          redeemed_at?: string | null
+          revealed_at?: string | null
+          sneaker_id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "af1_scratches_sneaker_id_fkey"
+            columns: ["sneaker_id"]
+            isOneToOne: false
+            referencedRelation: "af1_sneakers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      af1_settings: {
+        Row: {
+          description: string | null
+          key: string
+          value: Json
+        }
+        Insert: {
+          description?: string | null
+          key: string
+          value: Json
+        }
+        Update: {
+          description?: string | null
+          key?: string
+          value?: Json
+        }
+        Relationships: []
+      }
       af1_sneaker_images: {
         Row: {
           alt: string
@@ -115,12 +174,59 @@ export type Database = {
         }
         Relationships: []
       }
+      af1_unlocks: {
+        Row: {
+          scratch_id: string | null
+          sneaker_id: string
+          unlocked_at: string
+          user_id: string
+        }
+        Insert: {
+          scratch_id?: string | null
+          sneaker_id: string
+          unlocked_at?: string
+          user_id: string
+        }
+        Update: {
+          scratch_id?: string | null
+          sneaker_id?: string
+          unlocked_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "af1_unlocks_scratch_fk"
+            columns: ["scratch_id"]
+            isOneToOne: false
+            referencedRelation: "af1_scratches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "af1_unlocks_sneaker_id_fkey"
+            columns: ["sneaker_id"]
+            isOneToOne: false
+            referencedRelation: "af1_sneakers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      af1_draw_sneaker: { Args: { p_user_id: string }; Returns: string }
+      af1_get_or_create_scratch: { Args: never; Returns: Json }
+      af1_mark_scratch_revealed: {
+        Args: { p_scratch_id: string }
+        Returns: Json
+      }
+      af1_scratch_payload: {
+        Args: {
+          p_scratch: Database["public"]["Tables"]["af1_scratches"]["Row"]
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
