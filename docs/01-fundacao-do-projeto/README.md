@@ -10,6 +10,6 @@ Montar a base técnica e visual do projeto: repositório React + Vite + TypeScri
 
 | ID                                            | Título                                | Status       | Depende de |
 | --------------------------------------------- | ------------------------------------- | ------------ | ---------- |
-| [PBI-001](PBI-001-setup-react-vite-vercel.md) | Setup do app React e deploy na Vercel | Em andamento | —          |
-| [PBI-002](PBI-002-integracao-supabase.md)     | Integração com Supabase e migrations  | Em andamento | PBI-001    |
+| [PBI-001](PBI-001-setup-react-vite-vercel.md) | Setup do app React e deploy na Vercel | Concluída | —          |
+| [PBI-002](PBI-002-integracao-supabase.md)     | Integração com Supabase e migrations  | Concluída | PBI-001    |
 | [PBI-003](PBI-003-design-system-base.md)      | Design system base mobile-first       | Concluída | PBI-001    |

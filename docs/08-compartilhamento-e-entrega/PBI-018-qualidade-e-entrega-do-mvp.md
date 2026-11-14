@@ -20,6 +20,7 @@ Como grupo, queremos verificar o MVP de ponta a ponta contra as metas não funci
 - Riscos a conferir: o Supabase gratuito pausa após 1 semana sem uso; limites dos planos mudam; o Hobby da Vercel é só para uso não comercial.
 - LGPD: apagar os dados ao fim da disciplina. Esta PBI deixa pronto um script de limpeza, mas não o executa.
 - Como o projeto Supabase é exclusivo desta aplicação, ao fim da disciplina também é possível simplesmente excluir o projeto inteiro no painel; o script fica como alternativa para apagar só os dados mantendo a estrutura.
+- Nota de 2026-11-14: o bundle inicial já passa de 500 kB (155 kB gzip) com supabase-js e Motion; avaliar divisão de código por rota para a meta de LCP. `@playwright/test` e o Chromium já estão instalados (PBI-003). O Supabase está em us-east-1, o que acrescenta latência nas chamadas.
 - Esta PBI corrige problemas pequenos encontrados; problemas grandes viram novas PBIs.
 
 ## Critérios de aceitação

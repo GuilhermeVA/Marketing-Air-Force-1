@@ -5,7 +5,7 @@
 | **Feature**            | [01-fundacao-do-projeto](README.md) |
 | **Data de criação**    | 2026-11-14                          |
 | **Última atualização** | 2026-11-14 |
-| **Status**             | Em andamento |
+| **Status**             | Concluída |
 | **Prioridade**         | Alta                                |
 | **Depende de**         | PBI-001                             |
 
@@ -23,17 +23,17 @@ Como grupo, queremos o projeto Supabase criado e conectado ao front, com o schem
 
 ## Critérios de aceitação
 
-- [ ] Projeto Supabase criado (região mais próxima do Brasil disponível no plano gratuito).
+- [x] Projeto Supabase criado (região mais próxima do Brasil disponível no plano gratuito). *Criado em us-east-1; mantido por decisão do usuário em 2026-11-14.*
 - [x] Pasta `supabase/` inicializada no repositório com a CLI, com `config.toml` e `migrations/`.
-- [ ] Cliente único do Supabase em `src/lib/supabase.ts`, tipado com os tipos gerados (`npm run db:types`), lendo as variáveis `VITE_*`.
-- [ ] Variáveis configuradas na Vercel; o build publicado consegue se conectar ao Supabase.
+- [x] Cliente único do Supabase em `src/lib/supabase.ts`, tipado com os tipos gerados (`npm run db:types`), lendo as variáveis `VITE_*`.
+- [x] Variáveis configuradas na Vercel; o build publicado consegue se conectar ao Supabase.
 - [x] Script `npm run db:types` para regerar os tipos.
 - [x] README documenta como aplicar as migrations e o aviso sobre a pausa do plano gratuito.
 
 ## Testes
 
 - [x] **Automatizado:** teste que garante que `src/lib/supabase.ts` lança erro claro quando as variáveis de ambiente estão ausentes.
-- [ ] **Manual:** na URL publicada, abrir o console e confirmar uma chamada bem-sucedida ao Supabase (ex.: `supabase.auth.getSession()` sem erro).
+- [x] **Manual:** na URL publicada, abrir o console e confirmar uma chamada bem-sucedida ao Supabase (ex.: `supabase.auth.getSession()` sem erro).
 
 ## Log de implementação
 
@@ -46,3 +46,7 @@ Como grupo, queremos o projeto Supabase criado e conectado ao front, com o schem
   - Testes: `src/lib/env.test.ts` 3/3 passando; build e lint ok; chamada a `GET /auth/v1/settings` do projeto com a chave publishable respondeu 200 (URL e chave válidas).
   - Observações: variável renomeada para `VITE_SUPABASE_PUBLISHABLE_KEY` (o Supabase usa chaves "publishable" no lugar da "anon"). Na CLI v3 a geração remota de tipos usa `--remote` (não `--linked`). `database.types.ts` é um placeholder até a primeira geração, pois ainda não há tabelas.
   - Pendente (ações do usuário): `npx supabase login` e `npx supabase link --project-ref lotkxzqrloyqeyaooabp`; cadastrar as variáveis na Vercel; depois disso, rodar `npm run db:types` e conferir a conexão na URL publicada. Região do projeto não verificada.
+- 2026-11-14 — Implementado (conclusão): usuário fez `supabase login`; projeto já linkado. Tipos gerados com `npm run db:types` (schema `public` ainda vazio). Cliente importado em `src/main.tsx` para falhar cedo se faltar variável. Variáveis cadastradas na Vercel pelo usuário (sem a integração do Marketplace).
+  - Arquivos: `src/lib/database.types.ts`, `src/main.tsx`, `CLAUDE.md`
+  - Testes: bundle publicado contém a URL e a chave publishable; Playwright na URL de produção renderizou 4 rotas sem erros no console; `fetch` ao `GET /auth/v1/settings` a partir do domínio da Vercel retornou 200 (CORS ok).
+  - Observações: projeto está em **us-east-1**, não em São Paulo; mantido com aprovação do usuário (latência extra de ~100–150 ms aceita). O bundle passou de 500 kB (155 kB gzip) com o supabase-js e o Motion. Avaliar divisão de código na PBI-018 por causa da meta de LCP.

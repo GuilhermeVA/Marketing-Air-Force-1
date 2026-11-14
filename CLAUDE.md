@@ -8,8 +8,8 @@ Stack: React + Vite + TypeScript, Tailwind CSS, React Router, Motion, Supabase (
 ## Infraestrutura
 
 - Repositório: https://github.com/GuilhermeVA/Marketing-Air-Force-1
-- Supabase: projeto `lotkxzqrloyqeyaooabp` (https://lotkxzqrloyqeyaooabp.supabase.co). As chaves ficam em `.env.local` e nas variáveis de ambiente da Vercel, nunca no código.
-- Vercel: deploy pela integração com o GitHub.
+- Supabase: projeto `lotkxzqrloyqeyaooabp` (https://lotkxzqrloyqeyaooabp.supabase.co), região us-east-1. As chaves ficam em `.env.local` e nas variáveis de ambiente da Vercel, nunca no código.
+- Vercel: https://marketing-air-force-1.vercel.app (deploy automático a cada push na `main`). Variáveis cadastradas manualmente, sem a integração Supabase do Marketplace.
 
 ## Convenções do banco
 
