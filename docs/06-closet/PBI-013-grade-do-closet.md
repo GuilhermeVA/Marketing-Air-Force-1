@@ -21,6 +21,8 @@ Como cliente, quero ver no meu closet todos os pares da coleção, sabendo quais
 - Usuário anônimo sem resgate vê todos bloqueados e um convite para raspar/cadastrar.
 - Favoritar e ordenar ficam na PBI-014.
 
+- Nota de 2026-11-14 (PBI-011): conferir aqui que o par resgatado aparece desbloqueado na grade logo após o resgate. A tela de resgate leva ao closet pelo botão "Ver meu closet" (e o cupom tem o mesmo link).
+
 ## Critérios de aceitação
 
 - [ ] Rota `/closet` lista todos os pares ativos, em grade de 2 colunas em 360 px, com foto grande e nome.
