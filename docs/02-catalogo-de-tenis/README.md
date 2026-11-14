@@ -10,4 +10,4 @@ Guardar no Supabase o catálogo de pares (cor, imagens, palavras-chave, texto de
 
 | ID                                                | Título                             | Status  | Depende de |
 | ------------------------------------------------- | ---------------------------------- | ------- | ---------- |
-| [PBI-004](PBI-004-modelo-de-dados-do-catalogo.md) | Modelo de dados e seed do catálogo | A fazer | PBI-002    |
+| [PBI-004](PBI-004-modelo-de-dados-do-catalogo.md) | Modelo de dados e seed do catálogo | Concluída | PBI-002    |

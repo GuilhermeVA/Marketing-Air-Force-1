@@ -25,6 +25,8 @@ Como cliente, quero abrir um par que desbloqueei e ver fotos bonitas dele, o que
 - O fundo assume o tom suave da cor do par (`--accent`, PBI-003).
 - Acessibilidade: carrossel funciona por gestos, setas e teclado; imagens com `alt`.
 
+- Nota de 2026-11-14: o teste manual da PBI-004 (editar um par no Table Editor e ver a mudança no app sem novo deploy) ficou para esta PBI, que é a primeira a exibir o significado. Use `catalogApi.getSneakerBySlug` de `src/features/catalog`.
+
 ## Critérios de aceitação
 
 - [ ] Rota `/tenis/:slug` carrega o par pelo slug; slug inexistente mostra "Par não encontrado" com volta ao closet.

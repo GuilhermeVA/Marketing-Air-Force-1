@@ -14,7 +14,86 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      af1_sneaker_images: {
+        Row: {
+          alt: string
+          created_at: string
+          id: string
+          position: number
+          sneaker_id: string
+          url: string
+        }
+        Insert: {
+          alt: string
+          created_at?: string
+          id?: string
+          position?: number
+          sneaker_id: string
+          url: string
+        }
+        Update: {
+          alt?: string
+          created_at?: string
+          id?: string
+          position?: number
+          sneaker_id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "af1_sneaker_images_sneaker_id_fkey"
+            columns: ["sneaker_id"]
+            isOneToOne: false
+            referencedRelation: "af1_sneakers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      af1_sneakers: {
+        Row: {
+          active: boolean
+          color_hex: string
+          color_name: string
+          created_at: string
+          draw_weight: number
+          id: string
+          keywords: string[]
+          meaning: string
+          name: string
+          rarity: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          active?: boolean
+          color_hex: string
+          color_name: string
+          created_at?: string
+          draw_weight?: number
+          id?: string
+          keywords?: string[]
+          meaning?: string
+          name: string
+          rarity?: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          active?: boolean
+          color_hex?: string
+          color_name?: string
+          created_at?: string
+          draw_weight?: number
+          id?: string
+          keywords?: string[]
+          meaning?: string
+          name?: string
+          rarity?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

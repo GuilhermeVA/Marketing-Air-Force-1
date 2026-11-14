@@ -14,7 +14,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "db:types": "supabase gen types typescript --remote --schema public > src/lib/database.types.ts",
-    "db:push": "supabase db push"
+    "db:push": "supabase db push",
+    "db:start": "supabase db start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:test": "supabase test db"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",
