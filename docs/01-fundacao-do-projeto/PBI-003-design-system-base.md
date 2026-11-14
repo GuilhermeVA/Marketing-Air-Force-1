@@ -4,8 +4,8 @@
 | ---------------------- | ----------------------------------- |
 | **Feature**            | [01-fundacao-do-projeto](README.md) |
 | **Data de criação**    | 2026-11-14                          |
-| **Última atualização** | 2026-11-14                          |
-| **Status**             | A fazer                             |
+| **Última atualização** | 2026-11-14 |
+| **Status**             | Concluída |
 | **Prioridade**         | Alta                                |
 | **Depende de**         | PBI-001                             |
 
@@ -26,21 +26,27 @@ Criar os tokens visuais, as fontes, o layout base e os componentes primitivos us
 
 ## Critérios de aceitação
 
-- [ ] Tokens no tema do Tailwind/CSS: cores neutras, `--accent` dinâmico, tipografia, espaçamentos, raios e durações/curvas de animação.
-- [ ] Fontes carregadas do Google Fonts com `display=swap` e `preconnect`.
-- [ ] Componentes base: `Button` (primário/secundário, mínimo 44 px de altura, estado de foco visível), `Layout` de tela mobile (largura máxima, gutters) e `Spinner`/estado de carregamento discreto.
-- [ ] Hook `useReducedMotion` (ou o do Motion) disponível e usado como padrão nas animações dos componentes base.
-- [ ] Função utilitária para aplicar a cor do tênis ativo ao fundo (tom suave derivado de `--accent`).
-- [ ] Contraste do texto sobre os fundos neutros atende WCAG AA.
-- [ ] Layout sem rolagem horizontal em 360 px.
+- [x] Tokens no tema do Tailwind/CSS: cores neutras, `--accent` dinâmico, tipografia, espaçamentos, raios e durações/curvas de animação.
+- [x] Fontes carregadas do Google Fonts com `display=swap` e `preconnect`.
+- [x] Componentes base: `Button` (primário/secundário, mínimo 44 px de altura, estado de foco visível), `Layout` de tela mobile (largura máxima, gutters) e `Spinner`/estado de carregamento discreto.
+- [x] Hook `useReducedMotion` (ou o do Motion) disponível e usado como padrão nas animações dos componentes base.
+- [x] Função utilitária para aplicar a cor do tênis ativo ao fundo (tom suave derivado de `--accent`).
+- [x] Contraste do texto sobre os fundos neutros atende WCAG AA.
+- [x] Layout sem rolagem horizontal em 360 px.
 
 ## Testes
 
-- [ ] **Automatizado:** testes do `Button` (renderiza, dispara `onClick`, fica desabilitado com `disabled`).
-- [ ] **Automatizado:** teste da função que gera o tom suave a partir de uma cor hex.
+- [x] **Automatizado:** testes do `Button` (renderiza, dispara `onClick`, fica desabilitado com `disabled`).
+- [x] **Automatizado:** teste da função que gera o tom suave a partir de uma cor hex.
 - [ ] **Manual:** página temporária de amostra (`/dev/ui`, só em desenvolvimento) conferida em 360 px e no celular, com o modo de movimento reduzido do sistema ligado e desligado.
-- [ ] **Manual:** conferir o contraste com uma ferramenta (ex.: DevTools → Accessibility).
+- [x] **Manual:** conferir o contraste com uma ferramenta (ex.: DevTools → Accessibility).
 
 ## Log de implementação
 
 - 2026-11-14 — PBI criada.
+- 2026-11-14 — Início da implementação.
+- 2026-11-14 — Implementado: tokens no `@theme` do Tailwind v4 (neutros ivory/paper/line/mute/graphite/ink, `--accent` dinâmico e `--accent-soft`, Playfair Display + Inter, cantos de 2–4 px, curva `ease-elegant` e durações 300/450/600 ms zeradas com `prefers-reduced-motion`), fontes do Google Fonts com `preconnect` e `display=swap`, componentes `Button`, `Screen` e `Spinner`, utilitários `softTint`/`applyAccent`/`contrastRatio`, Motion com `<MotionConfig reducedMotion="user">` no app e página de amostra `/dev/ui` (só em desenvolvimento, carregada sob demanda).
+  - Arquivos: `src/index.css`, `index.html`, `src/main.tsx`, `src/routes.tsx`, `src/ui/{Button,Screen,Spinner}.tsx`, `src/ui/{color,motion,index}.ts`, `src/ui/{Button.test.tsx,color.test.ts}`, `src/pages/*.tsx`, `src/pages/dev/UiPreviewPage.tsx`, `tsconfig.{json,app.json,test.json}`, `vite.config.ts`
+  - Testes: 23/23 passando (Button 4; cor 10, incluindo contraste AA de todos os pares de tokens de texto e do texto sobre o tom suave de 5 cores saturadas); build e lint ok; verificação com Playwright (Chromium, 360×780) em 5 rotas, com e sem movimento reduzido: sem rolagem horizontal, fontes carregadas, fundo muda para o tom do destaque, menor botão com 44 px, 0 erros no console.
+  - Observações: o contraste foi conferido por teste automatizado em vez de ferramenta manual. Testes passaram a ter `tsconfig.test.json` próprio (tipos do Node só nos testes). `@playwright/test` instalado como dependência de dev (útil para a PBI-018). Valores dos tokens são provisórios até o protótipo do Figma.
+  - Pendente: conferir `/dev/ui` num celular real (teste manual).

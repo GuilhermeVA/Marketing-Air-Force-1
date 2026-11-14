@@ -1,1 +1,77 @@
 @import 'tailwindcss';
+
+/*
+ * Design system "Código de Cor": luxo discreto. Base neutra e uma única cor de
+ * destaque por vez, a do tênis ativo (--accent), aplicada em tempo de execução
+ * por applyAccent() em src/ui/color.ts.
+ */
+@theme {
+  /* Neutros */
+  --color-ivory: #f7f4ee; /* off-white quente, fundo padrão */
+  --color-paper: #fcfbf8; /* superfícies (cards) */
+  --color-line: #dcd6cc; /* linhas finas e bordas */
+  --color-mute: #5f5b55; /* texto secundário (AA sobre ivory) */
+  --color-graphite: #2a2a2a; /* texto principal */
+  --color-ink: #121212; /* preto, botões primários */
+
+  /* Destaque dinâmico (cor do tênis ativo) */
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
+  /* Tipografia */
+  --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Cantos discretos */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+
+  /* Movimento: lento e preciso (300 a 600 ms) */
+  --ease-elegant: cubic-bezier(0.22, 1, 0.36, 1);
+  --default-transition-duration: 300ms;
+  --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --accent: #8c8172; /* neutro champanhe até um tênis definir a cor */
+  --accent-soft: #f7f4ee;
+  --duration-fast: 300ms;
+  --duration-base: 450ms;
+  --duration-slow: 600ms;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-ivory);
+    color: var(--color-graphite);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}
