@@ -10,5 +10,5 @@ Permitir que o cliente raspe sem login (sessão anônima) e só se cadastre quan
 
 | ID                                                 | Título                               | Status  | Depende de       |
 | -------------------------------------------------- | ------------------------------------ | ------- | ---------------- |
-| [PBI-005](PBI-005-sessao-anonima.md)               | Sessão anônima automática            | A fazer | PBI-002          |
-| [PBI-006](PBI-006-cadastro-login-consentimento.md) | Cadastro, login e consentimento LGPD | A fazer | PBI-005, PBI-003 |
+| [PBI-005](PBI-005-sessao-anonima.md)               | Sessão anônima automática            | Em andamento | PBI-002          |
+| [PBI-006](PBI-006-cadastro-login-consentimento.md) | Cadastro, login e consentimento LGPD | Em andamento | PBI-005, PBI-003 |

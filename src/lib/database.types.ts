@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      af1_profiles: {
+        Row: {
+          consent_at: string
+          created_at: string
+          id: string
+          nickname: string
+        }
+        Insert: {
+          consent_at: string
+          created_at?: string
+          id: string
+          nickname: string
+        }
+        Update: {
+          consent_at?: string
+          created_at?: string
+          id?: string
+          nickname?: string
+        }
+        Relationships: []
+      }
       af1_sneaker_images: {
         Row: {
           alt: string

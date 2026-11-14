@@ -31,7 +31,7 @@ Escopo: o ciclo completo do MVP (link → raspadinha → cadastro → resgate �
 
 ## Decisões pendentes do grupo que afetam as PBIs
 
-1. Método de login (link mágico, e-mail e senha ou Google). Afeta a PBI-006.
+1. ~~Método de login~~ Decidido em 2026-11-14: e-mail e senha, sem confirmação de e-mail (PBI-006).
 2. Frequência das raspadinhas (sugestão: 1 por conta por dia). Afeta a PBI-007.
 3. Catálogo final de cores, palavras-chave e textos (6 a 8 pares). Afeta a PBI-004; a PBI usa conteúdo de exemplo.
 4. Carrossel do tênis bloqueado: todas as imagens em cinza ou só a primeira? Afeta a PBI-016.

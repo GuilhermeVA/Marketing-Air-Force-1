@@ -21,6 +21,7 @@ Como grupo, queremos verificar o MVP de ponta a ponta contra as metas não funci
 - LGPD: apagar os dados ao fim da disciplina. Esta PBI deixa pronto um script de limpeza, mas não o executa.
 - Como o projeto Supabase é exclusivo desta aplicação, ao fim da disciplina também é possível simplesmente excluir o projeto inteiro no painel; o script fica como alternativa para apagar só os dados mantendo a estrutura.
 - Nota de 2026-11-14: o bundle inicial já passa de 500 kB (155 kB gzip) com supabase-js e Motion; avaliar divisão de código por rota para a meta de LCP. `@playwright/test` e o Chromium já estão instalados (PBI-003). O Supabase está em us-east-1, o que acrescenta latência nas chamadas.
+- Nota de 2026-11-14: com login por e-mail e senha sem confirmação (PBI-006), o teste ponta a ponta não precisa simular e-mail.
 - Esta PBI corrige problemas pequenos encontrados; problemas grandes viram novas PBIs.
 
 ## Critérios de aceitação

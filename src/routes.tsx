@@ -1,4 +1,6 @@
 import type { RouteObject } from 'react-router'
+import { RequireSession } from './features/auth'
+import { AuthPage } from './pages/AuthPage'
 import { ClosetPage } from './pages/ClosetPage'
 import { CouponPage } from './pages/CouponPage'
 import { HomePage } from './pages/HomePage'
@@ -19,10 +21,17 @@ const devRoutes: RouteObject[] = import.meta.env.DEV
   : []
 
 export const routes: RouteObject[] = [
-  { path: '/', element: <HomePage /> },
-  { path: '/cupom', element: <CouponPage /> },
-  { path: '/closet', element: <ClosetPage /> },
-  { path: '/tenis/:slug', element: <SneakerPage /> },
+  {
+    // Telas que dependem de sessão (anônima ou com conta).
+    element: <RequireSession />,
+    children: [
+      { path: '/', element: <HomePage /> },
+      { path: '/cupom', element: <CouponPage /> },
+      { path: '/closet', element: <ClosetPage /> },
+      { path: '/tenis/:slug', element: <SneakerPage /> },
+      { path: '/entrar', element: <AuthPage /> },
+    ],
+  },
   { path: '/privacidade', element: <PrivacyPage /> },
   ...devRoutes,
   { path: '*', element: <NotFoundPage /> },

@@ -20,6 +20,8 @@ Como cliente que acabou de revelar o tênis, quero ver o prêmio e ser convidado
 - O fluxo de confirmação por e-mail (PBI-006) sai do app e volta por redirect: ao voltar já como conta permanente, o resgate deve acontecer automaticamente.
 - **Inclui o RF07** (prioridade S): cliente já logado que raspa é resgatado direto, sem passos extras. Entrou no MVP porque as contas têm uma raspadinha por dia (RF02, M), então esse caminho acontece em todo uso recorrente e não tem alternativa.
 
+- Nota de 2026-11-14: o login passou a ser por e-mail e senha, sem confirmação (PBI-006). Não há mais saída do app por e-mail: o cadastro acontece em `/entrar?modo=cadastro&voltar=/` e volta direto, já como conta permanente. Onde esta PBI fala em "confirmar o e-mail" ou "abrir o link do e-mail", leia "concluir o cadastro".
+
 ## Critérios de aceitação
 
 - [ ] Depois da revelação, a tela mostra o par (nome, cor, imagem) e a chamada para cadastrar/entrar e guardar no closet.

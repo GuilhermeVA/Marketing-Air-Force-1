@@ -61,3 +61,25 @@ Uso no dia a dia:
 O cliente do front fica em `src/lib/supabase.ts` e usa apenas a URL e a chave **publishable** (públicas). A `service_role`/secret key nunca vai para o front nem para o repositório.
 
 > **Atenção, plano gratuito:** o Supabase pausa projetos gratuitos após 1 semana sem uso. Use o projeto com regularidade e confira no painel, na véspera de apresentações, se ele está ativo (um projeto pausado pode ser retomado em _Project Settings_).
+
+## Autenticação (Supabase Auth)
+
+O visitante entra numa **sessão anônima** automaticamente e raspa sem cadastro. No cadastro (e-mail e senha), essa sessão vira uma conta com o mesmo id, levando o prêmio junto. Não há confirmação por e-mail.
+
+Configuração obrigatória no painel do Supabase (o `supabase/config.toml` já reflete isso no ambiente local):
+
+| Onde                                                                     | O que                                      |
+| ------------------------------------------------------------------------ | ------------------------------------------ |
+| _Authentication → Sign In / Providers → Allow anonymous sign-ins_        | Ligado                                     |
+| _Authentication → Sign In / Providers → Email → Confirm email_           | Desligado                                  |
+| _Authentication → Sign In / Providers → Email → Minimum password length_ | 8                                          |
+| _Authentication → URL Configuration → Site URL_                          | `https://marketing-air-force-1.vercel.app` |
+
+> Não use `supabase config push` neste projeto sem revisar `npx supabase config diff`: o `config.toml` local também declara valores de pool, MFA e storage diferentes do remoto.
+
+Para testar localmente contra o Supabase local (Docker):
+
+```bash
+npx supabase start
+VITE_SUPABASE_URL=http://127.0.0.1:54321 VITE_SUPABASE_PUBLISHABLE_KEY=<publishable key exibida pelo start> npm run dev
+```
