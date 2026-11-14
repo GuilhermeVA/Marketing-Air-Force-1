@@ -4,8 +4,8 @@
 | ---------------------- | ---------------------- |
 | **Feature**            | [06-closet](README.md) |
 | **Data de criação**    | 2026-11-14             |
-| **Última atualização** | 2026-11-14             |
-| **Status**             | A fazer                |
+| **Última atualização** | 2026-11-14 |
+| **Status**             | Em andamento |
 | **Prioridade**         | Média                  |
 | **Depende de**         | PBI-013                |
 
@@ -37,3 +37,4 @@ Como cliente, quero favoritar meus pares preferidos e ordenar o closet, para org
 
 - 2026-11-14 — PBI criada.
 - 2026-11-14 — Atualizada: tabelas, funções e bucket com o prefixo `af1_`/`af1-` (o projeto Supabase é compartilhado com outros projetos).
+- 2026-11-14 — Início da implementação.

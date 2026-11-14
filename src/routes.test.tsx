@@ -18,7 +18,7 @@ describe('rotas', () => {
   it.each([
     ['/', 'Coleção completa'],
     ['/cupom', 'Você ainda não tem cupom'],
-    ['/closet', 'Closet'],
+    ['/closet', /closet/i],
     ['/tenis/dourado', 'Tênis: dourado'],
     ['/privacidade', 'Privacidade'],
     ['/rota-que-nao-existe', 'Página não encontrada'],

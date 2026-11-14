@@ -210,18 +210,21 @@ export type Database = {
       }
       af1_unlocks: {
         Row: {
+          is_favorite: boolean
           scratch_id: string | null
           sneaker_id: string
           unlocked_at: string
           user_id: string
         }
         Insert: {
+          is_favorite?: boolean
           scratch_id?: string | null
           sneaker_id: string
           unlocked_at?: string
           user_id: string
         }
         Update: {
+          is_favorite?: boolean
           scratch_id?: string | null
           sneaker_id?: string
           unlocked_at?: string
