@@ -36,3 +36,28 @@ O deploy é automático: cada push na branch `main` publica uma nova versão na 
 1. Na Vercel, _Add New → Project_ e importe este repositório (o preset **Vite** é detectado sozinho).
 2. Em _Settings → Environment Variables_, cadastre as mesmas variáveis do `.env.example`.
 3. O `vercel.json` reescreve todas as rotas para `index.html`, então links diretos como `/closet` funcionam.
+
+## Banco de dados (Supabase)
+
+O schema fica versionado em `supabase/migrations/` e é aplicado com a Supabase CLI, instalada como dependência do projeto (use `npx supabase ...`).
+
+**Convenção:** todo objeto da aplicação usa o prefixo `af1_` (tabelas, funções, views, policies) e os buckets do Storage usam `af1-`.
+
+Configuração inicial (uma vez por máquina):
+
+```bash
+npx supabase login                                     # abre o navegador para autenticar
+npx supabase link --project-ref lotkxzqrloyqeyaooabp   # pede a senha do banco
+```
+
+Uso no dia a dia:
+
+| Comando                             | O que faz                                                   |
+| ----------------------------------- | ----------------------------------------------------------- |
+| `npx supabase migration new <nome>` | Cria um arquivo de migration vazio                          |
+| `npm run db:push`                   | Aplica as migrations pendentes no projeto remoto            |
+| `npm run db:types`                  | Regera `src/lib/database.types.ts` a partir do banco remoto |
+
+O cliente do front fica em `src/lib/supabase.ts` e usa apenas a URL e a chave **publishable** (públicas). A `service_role`/secret key nunca vai para o front nem para o repositório.
+
+> **Atenção, plano gratuito:** o Supabase pausa projetos gratuitos após 1 semana sem uso. Use o projeto com regularidade e confira no painel, na véspera de apresentações, se ele está ativo (um projeto pausado pode ser retomado em _Project Settings_).
