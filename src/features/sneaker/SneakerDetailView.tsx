@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { lazy, Suspense, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router'
@@ -152,7 +152,7 @@ function Unlocked({
         </Suspense>
       </div>
 
-      <motion.ul
+      <m.ul
         aria-label="O que esta cor simboliza"
         className="mt-8 flex flex-wrap gap-2"
         initial="hidden"
@@ -163,16 +163,16 @@ function Unlocked({
         }}
       >
         {(sneaker.keywords ?? []).map((word) => (
-          <motion.li
+          <m.li
             key={word}
             variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: durations.base, ease: easeElegant }}
             className="border border-ink px-4 py-2 text-xs tracking-[0.18em] text-ink uppercase"
           >
             {word}
-          </motion.li>
+          </m.li>
         ))}
-      </motion.ul>
+      </m.ul>
 
       <p className="mt-6 font-serif text-lg leading-relaxed text-graphite">{sneaker.meaning}</p>
 

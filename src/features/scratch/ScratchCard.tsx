@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
 import { Button, durations, easeElegant, useReducedMotion } from '../../ui'
@@ -124,7 +124,7 @@ export function ScratchCard({ image, colorHex, revealed, onReveal }: ScratchCard
         )}
 
         {done && !reduced && (
-          <motion.div
+          <m.div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0"
             style={{

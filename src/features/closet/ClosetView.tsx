@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router'
@@ -181,7 +181,7 @@ export function ClosetView({ catalog, closet, getScratch, isAnonymous, account }
         </p>
       )}
 
-      <motion.ul
+      <m.ul
         className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8"
         initial="hidden"
         animate="show"
@@ -190,7 +190,7 @@ export function ClosetView({ catalog, closet, getScratch, isAnonymous, account }
         {sortCloset(items, sort).map((item) => (
           <ClosetCard key={item.sneaker.id} item={item} onToggleFavorite={toggleFavorite} />
         ))}
-      </motion.ul>
+      </m.ul>
 
       <div className="mt-10">
         <ShareButton
@@ -227,7 +227,7 @@ function ClosetCard({
   const name = `${sneaker.colorName}${unlocked ? '' : ', bloqueado'}`
 
   return (
-    <motion.li
+    <m.li
       className="relative"
       variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
       transition={{ duration: durations.base, ease: easeElegant }}
@@ -284,6 +284,6 @@ function ClosetCard({
           <HeartIcon filled={item.isFavorite} />
         </button>
       )}
-    </motion.li>
+    </m.li>
   )
 }

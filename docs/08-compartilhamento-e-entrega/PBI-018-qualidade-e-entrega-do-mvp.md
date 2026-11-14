@@ -4,8 +4,8 @@
 | ---------------------- | ------------------------------------------ |
 | **Feature**            | [08-compartilhamento-e-entrega](README.md) |
 | **Data de criação**    | 2026-11-14                                 |
-| **Última atualização** | 2026-11-14                                 |
-| **Status**             | A fazer                                    |
+| **Última atualização** | 2026-11-14 |
+| **Status**             | Em andamento |
 | **Prioridade**         | Alta                                       |
 | **Depende de**         | PBI-001 a PBI-017                          |
 
@@ -46,3 +46,4 @@ Como grupo, queremos verificar o MVP de ponta a ponta contra as metas não funci
 - 2026-11-14 — PBI criada.
 - 2026-11-14 — Atualizada: tabelas, funções e bucket com o prefixo `af1_`/`af1-` (o projeto Supabase é compartilhado com outros projetos).
 - 2026-11-14 — Atualizada: o projeto Supabase passou a ser exclusivo desta aplicação; removidas as ressalvas de projeto compartilhado (prefixo `af1_` mantido).
+- 2026-11-14 — Início da implementação.

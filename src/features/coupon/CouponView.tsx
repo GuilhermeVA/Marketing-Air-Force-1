@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 import { Button, buttonClass, durations, easeElegant, Screen, Spinner } from '../../ui'
@@ -97,14 +97,14 @@ export function CouponView({ api }: { api: CouponApi }) {
       <p className="text-xs tracking-[0.2em] text-mute uppercase">Código de Cor</p>
       <h1 className="mt-3 text-3xl leading-tight">Seu cupom</h1>
 
-      <motion.section
+      <m.section
         aria-label="Cupom"
         initial={{ opacity: 0, y: 16, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: durations.slow, ease: easeElegant }}
         className="relative mt-8 overflow-hidden border border-line bg-paper px-6 py-8 text-center"
       >
-        <motion.span
+        <m.span
           aria-hidden="true"
           className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent"
           initial={{ x: '0%' }}
@@ -123,7 +123,7 @@ export function CouponView({ api }: { api: CouponApi }) {
             ? `Expirou em ${formatExpiry(coupon.expiresAt)}`
             : `Válido até ${formatExpiry(coupon.expiresAt)}`}
         </p>
-      </motion.section>
+      </m.section>
 
       <div className="mt-6 flex flex-col gap-3">
         <Button fullWidth onClick={handleCopy}>

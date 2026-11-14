@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { m } from 'motion/react'
 import { useState } from 'react'
 import {
   applyAccent,
@@ -78,7 +78,7 @@ export function UiPreviewPage() {
         <p className="mt-2 text-sm text-mute">
           Movimento reduzido do sistema: {reduced ? 'ligado (versão estática)' : 'desligado'}
         </p>
-        <motion.div
+        <m.div
           key={active ?? 'neutro'}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -87,7 +87,7 @@ export function UiPreviewPage() {
         >
           <p className="font-serif text-2xl text-ink">Dourado</p>
           <p className="mt-1 text-sm text-mute">Riqueza · Prosperidade</p>
-        </motion.div>
+        </m.div>
       </section>
     </Screen>
   )
