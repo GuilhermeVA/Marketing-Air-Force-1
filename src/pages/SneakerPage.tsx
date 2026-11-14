@@ -4,6 +4,7 @@ import { useAuth } from '../features/auth'
 import { createClosetApi } from '../features/closet/api'
 import { createScratchApi } from '../features/scratch/api'
 import { createSneakerApi } from '../features/sneaker/api'
+import { ShareButton } from '../features/share/ShareButton'
 import { SneakerDetailView } from '../features/sneaker/SneakerDetailView'
 
 export function SneakerPage() {
@@ -20,6 +21,9 @@ export function SneakerPage() {
       api={api}
       closet={closet}
       getScratch={getScratch}
+      shareSlot={
+        <ShareButton text="Descobri o que a minha cor diz sobre mim. Raspe o seu Air Force 1 e descubra a sua:" />
+      }
     />
   )
 }

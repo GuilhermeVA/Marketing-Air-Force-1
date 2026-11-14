@@ -16,6 +16,7 @@ import type { CatalogApi } from '../catalog/api'
 import { formatNextAvailable } from '../scratch/api'
 import type { ScratchState } from '../scratch/api'
 import type { ClosetApi } from './api'
+import { ShareButton } from '../share/ShareButton'
 import { buildCloset, loadSortMode, saveSortMode, SORT_OPTIONS, sortCloset } from './model'
 import type { ClosetItem, SortMode } from './model'
 
@@ -190,6 +191,13 @@ export function ClosetView({ catalog, closet, getScratch, isAnonymous, account }
           <ClosetCard key={item.sneaker.id} item={item} onToggleFavorite={toggleFavorite} />
         ))}
       </motion.ul>
+
+      <div className="mt-10">
+        <ShareButton
+          fullWidth
+          text="Estou montando meu closet de Air Force 1 com cores que dizem algo sobre mim. Raspe o seu:"
+        />
+      </div>
 
       <nav aria-label="Atalhos" className="mt-10 flex flex-col border-t border-line pt-4">
         <Link to="/" className={linkClass}>

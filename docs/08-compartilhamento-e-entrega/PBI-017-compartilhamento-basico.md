@@ -4,8 +4,8 @@
 | ---------------------- | ------------------------------------------ |
 | **Feature**            | [08-compartilhamento-e-entrega](README.md) |
 | **Data de criação**    | 2026-11-14                                 |
-| **Última atualização** | 2026-11-14                                 |
-| **Status**             | A fazer                                    |
+| **Última atualização** | 2026-11-14 |
+| **Status**             | Em andamento |
 | **Prioridade**         | Média                                      |
 | **Depende de**         | PBI-013, PBI-015                           |
 
@@ -37,3 +37,4 @@ Como cliente, quero compartilhar a campanha com amigos e colegas num toque, com 
 ## Log de implementação
 
 - 2026-11-14 — PBI criada.
+- 2026-11-14 — Início da implementação.
