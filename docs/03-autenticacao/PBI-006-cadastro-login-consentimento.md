@@ -5,7 +5,7 @@
 | **Feature**            | [03-autenticacao](README.md) |
 | **Data de criação**    | 2026-11-14                   |
 | **Última atualização** | 2026-11-14 |
-| **Status**             | Em andamento |
+| **Status**             | Concluída |
 | **Prioridade**         | Alta                         |
 | **Depende de**         | PBI-005, PBI-003             |
 
@@ -52,3 +52,6 @@ Como cliente que acabou de revelar um prêmio, quero criar minha conta ou entrar
   - Testes: Vitest 57/57 (23 novos: validação, conversão anônima, perfil, erros, `safeReturnPath` e formulário); pgTAP 11/11 nos perfis; navegador real (Playwright, 360 px) contra o Supabase local: botão bloqueado sem consentimento, cadastro manteve o mesmo id e deixou de ser anônimo, perfil gravado com consentimento, e-mail repetido e senha errada com mensagens claras, login em outro navegador com o mesmo id, "Sair" gerou nova sessão anônima, `voltar` externo ignorado, 0 erros de página.
   - Observações: depois de `updateUser` é preciso renovar o token (`refreshSession`) para o banco enxergar `is_anonymous=false`. Login de conta existente descarta a sessão anônima do navegador (limitação já prevista). Configurações de Auth não foram aplicadas com `supabase config push` porque o diff incluía mudanças indesejadas (pool, MFA, storage, Site URL local).
   - Pendente: no painel do Supabase, desligar "Confirm email", mínimo de senha 8 e Site URL da Vercel (ver README); depois, fazer o push e o teste manual no celular em produção.
+- 2026-11-14 — Concluída: configurações do painel aplicadas pelo usuário (confirmação de e-mail desligada, Site URL). Em produção (Playwright): cadastro manteve o id da sessão anônima e deixou de ser anônimo; login em outro navegador com o mesmo id; 0 erros. Conta de teste criada: `teste-e2e-1794694258084@example.com`.
+  - Observação: o mínimo de 8 caracteres **não está ativo no servidor** (senha de 7 foi aceita via API, criando `teste-senha-curta@example.com` e `teste-senha-curta2@example.com`); o formulário do app já exige 8. Ajustar "Minimum password length" no painel e apagar as 3 contas de teste.
+  - Pendente: teste manual num celular real.

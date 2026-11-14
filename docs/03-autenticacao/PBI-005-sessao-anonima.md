@@ -5,7 +5,7 @@
 | **Feature**            | [03-autenticacao](README.md) |
 | **Data de criação**    | 2026-11-14                   |
 | **Última atualização** | 2026-11-14 |
-| **Status**             | Em andamento |
+| **Status**             | Concluída |
 | **Prioridade**         | Alta                         |
 | **Depende de**         | PBI-002                      |
 
@@ -24,7 +24,7 @@ Ao abrir o app sem sessão, criar uma sessão anônima do Supabase Auth; ao reab
 
 ## Critérios de aceitação
 
-- [ ] Login anônimo habilitado no projeto Supabase (documentado no README).
+- [x] Login anônimo habilitado no projeto Supabase (documentado no README).
 - [x] `AuthProvider` (contexto React) que, na inicialização, recupera a sessão existente ou chama `signInAnonymously()` se não houver nenhuma.
 - [x] O contexto expõe `user`, `isAnonymous`, `loading` e reage a `onAuthStateChange`.
 - [x] As telas só fazem chamadas ao banco depois que a sessão está pronta (sem condição de corrida no primeiro carregamento).
@@ -34,7 +34,7 @@ Ao abrir o app sem sessão, criar uma sessão anônima do Supabase Auth; ao reab
 ## Testes
 
 - [x] **Automatizado:** testes do `AuthProvider` com Supabase mockado: cria sessão anônima quando não há sessão; reutiliza quando há; expõe `isAnonymous` corretamente; trata erro.
-- [ ] **Manual:** abrir o link numa aba anônima do navegador, conferir o usuário anônimo criado em Authentication → Users, recarregar e confirmar o mesmo id.
+- [x] **Manual:** abrir o link numa aba anônima do navegador, conferir o usuário anônimo criado em Authentication → Users, recarregar e confirmar o mesmo id.
 
 ## Log de implementação
 
@@ -47,3 +47,4 @@ Ao abrir o app sem sessão, criar uma sessão anônima do Supabase Auth; ao reab
   - Testes: 6 testes do provider e do `RequireSession` passando; navegador real contra o Supabase local: sessão anônima criada, mesmo id após recarregar, outro navegador com outro id, uma única sessão anônima por navegador mesmo em StrictMode, 0 erros.
   - Observações: o metadado `app = 'af1'` não foi usado (o projeto é exclusivo). O login anônimo está **desligado** no projeto remoto (`anonymous_provider_disabled`), então o código desta PBI foi commitado mas não enviado, para não quebrar o site publicado.
   - Pendente: ligar "Allow anonymous sign-ins" no painel; depois, push e teste manual em produção.
+- 2026-11-14 — Concluída: login anônimo ligado no painel pelo usuário; código publicado. Em produção (Playwright), o visitante recebe sessão anônima sem erros.
