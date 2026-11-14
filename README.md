@@ -83,3 +83,29 @@ Para testar localmente contra o Supabase local (Docker):
 npx supabase start
 VITE_SUPABASE_URL=http://127.0.0.1:54321 VITE_SUPABASE_PUBLISHABLE_KEY=<publishable key exibida pelo start> npm run dev
 ```
+
+## Testes
+
+| Comando            | O que faz                                                                          |
+| ------------------ | ---------------------------------------------------------------------------------- |
+| `npm test`         | Testes unitários e de componentes (Vitest)                                         |
+| `npm run db:test`  | Testes do banco (pgTAP), no Supabase local                                         |
+| `npm run test:e2e` | Fluxo completo no navegador (Playwright, tela de celular), contra o Supabase local |
+
+Os testes de banco e ponta a ponta precisam do Supabase local rodando (Docker): `npx supabase start` (e `npx supabase db reset` para recomeçar com o catálogo de exemplo). Na primeira vez, instale o navegador com `npx playwright install chromium`.
+
+Relatórios do Lighthouse (mobile, produção) ficam em `docs/08-compartilhamento-e-entrega/lighthouse/`.
+
+## Checklist de apresentação
+
+Na véspera:
+
+- [ ] Abrir o painel do Supabase e confirmar que o projeto está **ativo** (o plano gratuito pausa após 1 semana sem uso; se pausado, restaurar em _Project Settings_, o que leva alguns minutos).
+- [ ] Abrir https://marketing-air-force-1.vercel.app no celular e fazer o fluxo completo: raspar, cadastrar, ver o cupom, o closet e a tela de um tênis.
+- [ ] Conferir as variáveis `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` na Vercel (_Settings → Environment Variables_).
+- [ ] Conferir no Supabase (_Authentication_): login anônimo ligado, "Confirm email" desligado, Site URL = URL da Vercel.
+- [ ] Confirmar os limites vigentes dos planos gratuitos (Vercel Hobby e Supabase Free).
+- [ ] Apagar as contas de teste (seção A de `supabase/scripts/apagar-dados-usuarios.sql`).
+- [ ] Para mostrar a raspadinha de novo com a mesma conta no mesmo dia, usar uma aba anônima (nova sessão).
+
+Ao fim da disciplina: apagar os dados (seção B do mesmo script) ou excluir o projeto no Supabase.
