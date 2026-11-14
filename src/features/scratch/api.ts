@@ -27,6 +27,12 @@ export type ScratchState =
     }
   | { status: 'all_unlocked' }
 
+export type RedeemResult = {
+  sneaker: { id: string; slug: string; name: string; colorName: string }
+  /** Cupom emitido neste resgate (só no primeiro resgate da conta). */
+  coupon: { code: string; discountPercent: number; expiresAt: string } | null
+}
+
 export class ScratchError extends Error {
   constructor(message: string, options?: { cause?: unknown }) {
     super(message, options)
@@ -85,6 +91,35 @@ export function createScratchApi(client: SupabaseClient) {
       const { error } = await client.rpc('af1_mark_scratch_revealed', { p_scratch_id: scratchId })
       if (error) throw new ScratchError('Não foi possível registrar a revelação.', { cause: error })
     },
+
+    /** Resgata o prêmio na conta (desbloqueia o par e, no primeiro resgate, emite o cupom). */
+    async redeem(scratchId: string): Promise<RedeemResult> {
+      const { data, error } = await client.rpc('af1_redeem_scratch', { p_scratch_id: scratchId })
+      if (error)
+        throw new ScratchError('Não foi possível guardar o par no seu closet.', { cause: error })
+      return parseRedeemResult(data)
+    },
+  }
+}
+
+export function parseRedeemResult(raw: unknown): RedeemResult {
+  const v = (raw ?? {}) as Record<string, Record<string, unknown> | null>
+  const s = v.sneaker ?? {}
+  const c = v.coupon
+  return {
+    sneaker: {
+      id: String(s.id),
+      slug: String(s.slug),
+      name: String(s.name),
+      colorName: String(s.color_name),
+    },
+    coupon: c
+      ? {
+          code: String(c.code),
+          discountPercent: Number(c.discount_percent),
+          expiresAt: String(c.expires_at),
+        }
+      : null,
   }
 }
 

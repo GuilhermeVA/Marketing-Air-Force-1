@@ -17,7 +17,7 @@ function renderAt(path: string) {
 describe('rotas', () => {
   it.each([
     ['/', 'Coleção completa'],
-    ['/cupom', 'Cupom'],
+    ['/cupom', 'Você ainda não tem cupom'],
     ['/closet', 'Closet'],
     ['/tenis/dourado', 'Tênis: dourado'],
     ['/privacidade', 'Privacidade'],

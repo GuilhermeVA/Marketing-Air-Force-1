@@ -26,6 +26,14 @@ export function ClosetPage() {
     <Screen>
       <h1 className="text-3xl">Closet</h1>
       <p className="mt-2 text-sm text-mute">Em construção.</p>
+      {!isAnonymous && (
+        <Link
+          to="/cupom"
+          className="mt-6 inline-flex min-h-11 items-center text-sm underline underline-offset-4"
+        >
+          Meu cupom
+        </Link>
+      )}
 
       <div className="mt-10 border-t border-line pt-6">
         {isAnonymous ? (

@@ -35,4 +35,4 @@ Escopo: o ciclo completo do MVP (link → raspadinha → cadastro → resgate �
 2. Frequência das raspadinhas (sugestão: 1 por conta por dia). Afeta a PBI-007.
 3. Catálogo final de cores, palavras-chave e textos (6 a 8 pares). Afeta a PBI-004; a PBI usa conteúdo de exemplo.
 4. Carrossel do tênis bloqueado: todas as imagens em cinza ou só a primeira? Afeta a PBI-016.
-5. Valor e validade do cupom (ex.: 15%). Afeta a PBI-010.
+5. ~~Valor e validade do cupom~~ Decidido em 2026-11-14: 10% de desconto, 10 dias (PBI-010).

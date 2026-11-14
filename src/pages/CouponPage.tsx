@@ -1,10 +1,11 @@
-import { Screen } from '../ui'
+import { useMemo } from 'react'
+import { useAuth } from '../features/auth'
+import { createCouponApi } from '../features/coupon/api'
+import { CouponView } from '../features/coupon/CouponView'
 
 export function CouponPage() {
-  return (
-    <Screen>
-      <h1 className="text-3xl">Cupom</h1>
-      <p className="mt-2 text-sm text-mute">Em construção.</p>
-    </Screen>
-  )
+  const { client, user } = useAuth()
+  const api = useMemo(() => createCouponApi(client), [client])
+  // A key recria a tela ao trocar de usuário, recarregando o cupom da conta certa.
+  return <CouponView key={user?.id} api={api} />
 }

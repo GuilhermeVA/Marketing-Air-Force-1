@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      af1_coupons: {
+        Row: {
+          code: string
+          created_at: string
+          discount_percent: number
+          expires_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_percent: number
+          expires_at: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_percent?: number
+          expires_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       af1_profiles: {
         Row: {
           consent_at: string
@@ -67,6 +94,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "af1_scratches_coupon_fk"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "af1_coupons"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "af1_scratches_sneaker_id_fkey"
             columns: ["sneaker_id"]
@@ -221,6 +255,8 @@ export type Database = {
         Args: { p_scratch_id: string }
         Returns: Json
       }
+      af1_new_coupon_code: { Args: never; Returns: string }
+      af1_redeem_scratch: { Args: { p_scratch_id: string }; Returns: Json }
       af1_scratch_payload: {
         Args: {
           p_scratch: Database["public"]["Tables"]["af1_scratches"]["Row"]

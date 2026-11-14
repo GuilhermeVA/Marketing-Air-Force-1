@@ -93,8 +93,10 @@ select is((select public.af1_get_or_create_scratch() ->> 'status'), 'all_unlocke
 reset role;
 select ok(
   (with draws as (
-     select s.slug from generate_series(1, 3000) g
-     join public.af1_sneakers s on s.id = public.af1_draw_sneaker(gen_random_uuid())
+     select s.slug
+     from generate_series(1, 3000) g
+     cross join lateral (select public.af1_draw_sneaker(gen_random_uuid()) as id where g > 0) d
+     join public.af1_sneakers s on s.id = d.id
    )
    select (select count(*) from draws where slug = 'dourado')
         < (select count(*) from draws where slug = 'azul-marinho') / 2),

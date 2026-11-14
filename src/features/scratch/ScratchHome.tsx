@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { applyAccent, Button, buttonClass, Screen, Spinner } from '../../ui'
 import { formatNextAvailable } from './api'
-import type { ScratchApi, ScratchState } from './api'
+import type { RedeemResult, ScratchApi, ScratchState } from './api'
 import { ScratchCard } from './ScratchCard'
 
 type ScratchHomeProps = {
@@ -14,12 +14,20 @@ type ScratchHomeProps = {
 
 type View = { kind: 'loading' } | { kind: 'error' } | { kind: 'ready'; state: ScratchState }
 
+type Redeem =
+  | { kind: 'idle' }
+  | { kind: 'pending' }
+  | { kind: 'error' }
+  | { kind: 'done'; result: RedeemResult }
+
 const linkClass = 'inline-flex min-h-11 items-center text-sm underline underline-offset-4'
 
 /** Tela de entrada: verifica a disponibilidade e mostra a raspadinha (PBI-008/009). */
 export function ScratchHome({ api, isAnonymous, userKey }: ScratchHomeProps) {
   const [view, setView] = useState<View>({ kind: 'loading' })
   const [reloadKey, setReloadKey] = useState(0)
+  const [redeem, setRedeem] = useState<Redeem>({ kind: 'idle' })
+  const redeemedFor = useRef<string | null>(null)
 
   useEffect(() => {
     let active = true
@@ -36,6 +44,29 @@ export function ScratchHome({ api, isAnonymous, userKey }: ScratchHomeProps) {
     setView({ kind: 'loading' })
     setReloadKey((n) => n + 1)
   }, [])
+
+  // Conta permanente com prêmio revelado: resgata sozinho (RF07 e volta do cadastro).
+  const pendingScratchId =
+    view.kind === 'ready' &&
+    view.state.status === 'available' &&
+    view.state.scratch.status === 'revelada' &&
+    !isAnonymous
+      ? view.state.scratch.id
+      : null
+  const runRedeem = useCallback(
+    (scratchId: string) => {
+      redeemedFor.current = scratchId
+      setRedeem({ kind: 'pending' })
+      api
+        .redeem(scratchId)
+        .then((result) => setRedeem({ kind: 'done', result }))
+        .catch(() => setRedeem({ kind: 'error' }))
+    },
+    [api],
+  )
+  useEffect(() => {
+    if (pendingScratchId && redeemedFor.current !== pendingScratchId) runRedeem(pendingScratchId)
+  }, [pendingScratchId, runRedeem])
 
   // Recarrega sozinho quando a próxima raspadinha libera.
   const nextAt =
@@ -136,8 +167,34 @@ export function ScratchHome({ api, isAnonymous, userKey }: ScratchHomeProps) {
                   O prêmio fica reservado neste navegador até você se cadastrar.
                 </p>
               </>
+            ) : redeem.kind === 'done' ? (
+              <>
+                <p role="status" className="text-sm text-graphite">
+                  Guardado no seu closet.
+                  {redeem.result.coupon &&
+                    ` E você ganhou um cupom de ${redeem.result.coupon.discountPercent}%.`}
+                </p>
+                <Link
+                  to={redeem.result.coupon ? '/cupom' : '/closet'}
+                  className={buttonClass('primary', true)}
+                >
+                  {redeem.result.coupon ? 'Ver meu cupom' : 'Ver meu closet'}
+                </Link>
+              </>
+            ) : redeem.kind === 'error' ? (
+              <>
+                <p role="alert" className="text-sm text-[#a3271c]">
+                  Não conseguimos guardar o par agora. O prêmio continua reservado para você.
+                </p>
+                <Button fullWidth onClick={() => runRedeem(scratch.id)}>
+                  Tentar de novo
+                </Button>
+              </>
             ) : (
-              <p className="text-sm text-mute">Estamos guardando este par no seu closet.</p>
+              <p className="flex items-center gap-3 text-sm text-mute">
+                <Spinner label="Guardando no seu closet" />
+                Guardando no seu closet…
+              </p>
             )}
           </div>
         )}

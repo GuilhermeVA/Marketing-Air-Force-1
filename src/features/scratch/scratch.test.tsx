@@ -103,16 +103,22 @@ describe('ScratchCard', () => {
   })
 })
 
-function fakeApi(
-  state: ScratchState | Error,
-): ScratchApi & { getOrCreate: ReturnType<typeof vi.fn>; markRevealed: ReturnType<typeof vi.fn> } {
+const redeemed = (coupon: boolean) => ({
+  sneaker: { id: 'k-1', slug: 'dourado', name: 'Air Force 1 Dourado', colorName: 'Dourado' },
+  coupon: coupon
+    ? { code: 'AF1-ABCD', discountPercent: 10, expiresAt: '2026-11-24T12:00:00Z' }
+    : null,
+})
+
+function fakeApi(state: ScratchState | Error) {
   return {
     getOrCreate: vi.fn(async () => {
       if (state instanceof Error) throw state
       return state
     }),
     markRevealed: vi.fn(async () => {}),
-  }
+    redeem: vi.fn(async () => redeemed(true)),
+  } satisfies ScratchApi
 }
 
 function renderHome(api: ScratchApi, isAnonymous = true) {
@@ -177,5 +183,50 @@ describe('ScratchHome', () => {
     const user = userEvent.setup()
     await user.click(await screen.findByRole('button', { name: 'Tentar de novo' }))
     expect(api.getOrCreate).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('ScratchHome — resgate (PBI-011)', () => {
+  it('conta logada: ao revelar, resgata sozinha e oferece o cupom', async () => {
+    const api = fakeApi(parseScratchState(rawAvailable('livre')))
+    renderHome(api, false)
+    const user = userEvent.setup()
+    await user.click(await screen.findByRole('button', { name: 'Revelar' }))
+    expect(await screen.findByRole('link', { name: 'Ver meu cupom' })).toHaveAttribute(
+      'href',
+      '/cupom',
+    )
+    expect(api.redeem).toHaveBeenCalledTimes(1)
+    expect(api.redeem).toHaveBeenCalledWith('s-1')
+    expect(screen.getByText(/Guardado no seu closet/)).toBeInTheDocument()
+  })
+
+  it('volta do cadastro com prêmio revelado: resgata sem pedir nada', async () => {
+    const api = fakeApi(parseScratchState(rawAvailable('revelada')))
+    api.redeem.mockResolvedValueOnce(redeemed(false))
+    renderHome(api, false)
+    expect(await screen.findByRole('link', { name: 'Ver meu closet' })).toHaveAttribute(
+      'href',
+      '/closet',
+    )
+    expect(api.redeem).toHaveBeenCalledTimes(1)
+  })
+
+  it('anônimo não resgata: vê o convite para guardar no closet', async () => {
+    const api = fakeApi(parseScratchState(rawAvailable('revelada')))
+    renderHome(api, true)
+    expect(await screen.findByRole('link', { name: 'Guardar no meu closet' })).toBeInTheDocument()
+    expect(api.redeem).not.toHaveBeenCalled()
+  })
+
+  it('falha no resgate mantém o prêmio e permite tentar de novo', async () => {
+    const api = fakeApi(parseScratchState(rawAvailable('revelada')))
+    api.redeem.mockRejectedValueOnce(new Error('rede'))
+    renderHome(api, false)
+    expect(await screen.findByRole('alert')).toHaveTextContent('O prêmio continua reservado')
+    const user = userEvent.setup()
+    await user.click(screen.getByRole('button', { name: 'Tentar de novo' }))
+    expect(await screen.findByRole('link', { name: 'Ver meu cupom' })).toBeInTheDocument()
+    expect(api.redeem).toHaveBeenCalledTimes(2)
   })
 })

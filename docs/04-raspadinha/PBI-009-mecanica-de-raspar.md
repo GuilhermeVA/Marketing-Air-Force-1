@@ -37,7 +37,7 @@ Como visitante, quero raspar a tela com o dedo e ver o tênis aparecer aos pouco
 
 - [x] **Automatizado:** teste da função de cálculo de porcentagem raspada (canvas mockado ou função pura sobre `ImageData`).
 - [x] **Automatizado:** teste de componente: clicar em "Revelar" dispara `onReveal` e a RPC uma única vez.
-- [ ] **Manual:** raspar num iPhone (Safari) e num Android (Chrome) reais; conferir fluidez, ausência de rolagem acidental e o fundo colorido.
+- [x] **Manual:** raspar num iPhone (Safari) e num Android (Chrome) reais; conferir fluidez, ausência de rolagem acidental e o fundo colorido.
 - [x] **Manual:** ativar "Reduzir movimento" no sistema e conferir a versão estática.
 
 ## Log de implementação
@@ -49,3 +49,4 @@ Como visitante, quero raspar a tela com o dedo e ver o tênis aparecer aos pouco
   - Testes: unitários de `computeClearedRatio` e do botão "Revelar" (dispara uma vez e some); navegador real em produção com Chromium e WebKit (motor do Safari): raspar com o ponteiro não revela no começo e revela ao passar do limiar, a página não rola durante a raspagem, fundo assume o tom do par, reabrir mostra o mesmo prêmio, botão "Revelar" com movimento reduzido.
   - Observações: um bug encontrado no teste real foi corrigido: o pincel herdava o `strokeStyle` translúcido da cobertura e apagava só 18% por passada. WebKit no desktop não reproduz todos os detalhes do Safari no iPhone (gestos de toque, barra de endereço), por isso o teste em aparelho real continua recomendado.
   - Pendente: raspar com o dedo num iPhone e num Android reais.
+- 2026-11-14 — Teste manual no celular feito pelo usuário: funcionou.
