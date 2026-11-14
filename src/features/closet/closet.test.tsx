@@ -16,8 +16,6 @@ const sneakers: Sneaker[] = colors.map((c, i) => ({
   name: `Air Force 1 ${c}`,
   colorName: c,
   colorHex: '#123456',
-  keywords: [],
-  meaning: '',
   rarity: 'comum',
   sortOrder: i,
   images: [{ id: `i-${i}`, url: `/${i}.svg`, alt: c, position: 1 }],

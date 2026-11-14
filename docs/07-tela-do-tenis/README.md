@@ -10,5 +10,5 @@ Ao tocar num par do closet, abrir uma tela só com ele: se desbloqueado, carross
 
 | ID                                               | Título                                   | Status  | Depende de |
 | ------------------------------------------------ | ---------------------------------------- | ------- | ---------- |
-| [PBI-015](PBI-015-tela-do-tenis-desbloqueado.md) | Tela do tênis desbloqueado com carrossel | A fazer | PBI-013    |
+| [PBI-015](PBI-015-tela-do-tenis-desbloqueado.md) | Tela do tênis desbloqueado com carrossel | Em andamento | PBI-013    |
 | [PBI-016](PBI-016-tela-do-tenis-bloqueado.md)    | Estado bloqueado da tela do tênis        | A fazer | PBI-015    |

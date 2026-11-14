@@ -19,7 +19,7 @@ describe('rotas', () => {
     ['/', 'Coleção completa'],
     ['/cupom', 'Você ainda não tem cupom'],
     ['/closet', /closet/i],
-    ['/tenis/dourado', 'Tênis: dourado'],
+    ['/tenis/dourado', 'Par não encontrado'],
     ['/privacidade', 'Privacidade'],
     ['/rota-que-nao-existe', 'Página não encontrada'],
   ])('%s renderiza "%s"', async (path, heading) => {

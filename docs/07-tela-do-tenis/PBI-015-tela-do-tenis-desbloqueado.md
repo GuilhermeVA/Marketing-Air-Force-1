@@ -4,8 +4,8 @@
 | ---------------------- | ----------------------------- |
 | **Feature**            | [07-tela-do-tenis](README.md) |
 | **Data de criação**    | 2026-11-14                    |
-| **Última atualização** | 2026-11-14                    |
-| **Status**             | A fazer                       |
+| **Última atualização** | 2026-11-14 |
+| **Status**             | Em andamento |
 | **Prioridade**         | Alta                          |
 | **Depende de**         | PBI-013                       |
 
@@ -48,3 +48,4 @@ Como cliente, quero abrir um par que desbloqueei e ver fotos bonitas dele, o que
 ## Log de implementação
 
 - 2026-11-14 — PBI criada.
+- 2026-11-14 — Início da implementação.

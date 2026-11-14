@@ -254,6 +254,7 @@ export type Database = {
     Functions: {
       af1_draw_sneaker: { Args: { p_user_id: string }; Returns: string }
       af1_get_or_create_scratch: { Args: never; Returns: Json }
+      af1_get_sneaker_detail: { Args: { p_slug: string }; Returns: Json }
       af1_mark_scratch_revealed: {
         Args: { p_scratch_id: string }
         Returns: Json

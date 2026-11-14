@@ -9,8 +9,6 @@ const row = (slug: string, sort: number, positions: number[] = [2, 1, 3]) => ({
   name: `Air Force 1 ${slug}`,
   color_name: slug,
   color_hex: '#c9a227',
-  keywords: ['Riqueza', 'Prosperidade'],
-  meaning: 'Texto',
   rarity: 'rara',
   sort_order: sort,
   images: positions.map((p) => ({

@@ -16,8 +16,6 @@ export type Sneaker = {
   name: string
   colorName: string
   colorHex: string
-  keywords: string[]
-  meaning: string
   rarity: Rarity
   sortOrder: number
   images: SneakerImage[]
@@ -28,21 +26,13 @@ type SneakerRow = Database['public']['Tables']['af1_sneakers']['Row']
 type ImageRow = Database['public']['Tables']['af1_sneaker_images']['Row']
 
 const SELECT = `
-  id, slug, name, color_name, color_hex, keywords, meaning, rarity, sort_order,
+  id, slug, name, color_name, color_hex, rarity, sort_order,
   images:af1_sneaker_images ( id, url, alt, position )
 `
 
 type Row = Pick<
   SneakerRow,
-  | 'id'
-  | 'slug'
-  | 'name'
-  | 'color_name'
-  | 'color_hex'
-  | 'keywords'
-  | 'meaning'
-  | 'rarity'
-  | 'sort_order'
+  'id' | 'slug' | 'name' | 'color_name' | 'color_hex' | 'rarity' | 'sort_order'
 > & { images: Pick<ImageRow, 'id' | 'url' | 'alt' | 'position'>[] | null }
 
 export function toSneaker(row: Row): Sneaker {
@@ -52,8 +42,6 @@ export function toSneaker(row: Row): Sneaker {
     name: row.name,
     colorName: row.color_name,
     colorHex: row.color_hex,
-    keywords: row.keywords ?? [],
-    meaning: row.meaning,
     rarity: row.rarity as Rarity,
     sortOrder: row.sort_order,
     images: [...(row.images ?? [])].sort((a, b) => a.position - b.position),
@@ -67,7 +55,10 @@ export class CatalogError extends Error {
   }
 }
 
-/** Acesso ao catálogo de tênis (somente leitura; o RLS já filtra pares inativos). */
+/**
+ * Acesso ao catálogo de tênis (somente leitura; o RLS já filtra pares inativos).
+ * Palavras-chave e significado não vêm aqui: só pela RPC de detalhe, para pares desbloqueados.
+ */
 export function createCatalogApi(client: Client) {
   return {
     /** Todos os pares ativos, na ordem do catálogo, com as imagens ordenadas. */
