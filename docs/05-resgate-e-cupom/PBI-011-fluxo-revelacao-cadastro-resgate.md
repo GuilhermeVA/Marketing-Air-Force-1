@@ -22,6 +22,8 @@ Como cliente que acabou de revelar o tênis, quero ver o prêmio e ser convidado
 
 - Nota de 2026-11-14: o login passou a ser por e-mail e senha, sem confirmação (PBI-006). Não há mais saída do app por e-mail: o cadastro acontece em `/entrar?modo=cadastro&voltar=/` e volta direto, já como conta permanente. Onde esta PBI fala em "confirmar o e-mail" ou "abrir o link do e-mail", leia "concluir o cadastro".
 
+- Nota de 2026-11-14 (PBI-008/009): a tela revelada já existe em `src/features/scratch/ScratchHome.tsx`. Para anônimos há o link "Guardar no meu closet" para `/entrar?modo=cadastro&voltar=/`; para contas logadas há só o texto provisório "Estamos guardando este par no seu closet". Esta PBI deve chamar `af1_redeem_scratch` nesses dois caminhos (ao voltar do cadastro e logo após revelar).
+
 ## Critérios de aceitação
 
 - [ ] Depois da revelação, a tela mostra o par (nome, cor, imagem) e a chamada para cadastrar/entrar e guardar no closet.
