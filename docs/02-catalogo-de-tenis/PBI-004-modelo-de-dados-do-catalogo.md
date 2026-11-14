@@ -35,7 +35,7 @@ Como grupo, queremos cadastrar e editar cores, imagens, palavras-chave e textos 
 
 - [x] **Automatizado:** teste SQL (pgTAP via `supabase test db`) que confirma que `anon` lê só pares ativos e não consegue inserir nem atualizar.
 - [x] **Automatizado:** teste da função de API com o cliente Supabase mockado (lista ordenada e busca por slug inexistente retorna `null`).
-- [ ] **Manual:** alterar o texto de um par no Table Editor e ver a mudança refletida no app sem novo deploy.
+- [x] **Manual:** alterar o texto de um par no Table Editor e ver a mudança refletida no app sem novo deploy.
 
 ## Log de implementação
 
@@ -47,3 +47,4 @@ Como grupo, queremos cadastrar e editar cores, imagens, palavras-chave e textos 
   - Testes: pgTAP 16/16 no banco local (integridade, leitura só de ativos, escrita bloqueada para anon e authenticated, bucket público); Vitest 28/28 (5 novos da API com cliente falso); build e lint ok. No banco remoto, com a chave publishable: lista os 6 pares em ordem com 3 imagens cada; insert e update anônimos negados (401/42501); URL pública do bucket responde "Object not found" (bucket existe e é público).
   - Observações: os placeholders ficam no próprio app (`/placeholders/...`) em vez do bucket, para não precisar de upload; o bucket fica pronto para as imagens finais. O conteúdo do catálogo é público pela API, inclusive o significado de pares que o usuário ainda não desbloqueou (ver PBI-016).
   - Pendente: o teste manual (editar no Table Editor e ver no app) depende das telas que exibem o catálogo; será feito na PBI-015.
+- 2026-11-14 — Teste manual feito na PBI-015 (Supabase local): o significado foi alterado direto no banco e apareceu no app ao recarregar, sem novo deploy. Observação: desde a PBI-016, `keywords` e `meaning` não são mais lidos pela API do catálogo, só pela RPC `af1_get_sneaker_detail`.

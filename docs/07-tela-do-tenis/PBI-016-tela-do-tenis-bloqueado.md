@@ -4,8 +4,8 @@
 | ---------------------- | ----------------------------- |
 | **Feature**            | [07-tela-do-tenis](README.md) |
 | **Data de criação**    | 2026-11-14                    |
-| **Última atualização** | 2026-11-14                    |
-| **Status**             | A fazer                       |
+| **Última atualização** | 2026-11-14 |
+| **Status**             | Concluída |
 | **Prioridade**         | Alta                          |
 | **Depende de**         | PBI-015                       |
 
@@ -22,20 +22,25 @@ Como cliente, quero abrir um par que ainda não desbloqueei e ver que ele existe
 
 ## Critérios de aceitação
 
-- [ ] Par bloqueado em `/tenis/:slug` mostra a primeira imagem em tons de cinza com cadeado de traço fino centralizado.
-- [ ] Etiquetas e texto de significado substituídos pelo aviso "Desbloqueie esse tênis para ver o que ele simboliza".
-- [ ] Ícone de cadeado + texto "Bloqueado" visíveis e anunciados por leitores de tela.
-- [ ] Chamada para a ação: botão para a raspadinha quando houver uma disponível, ou o horário da próxima.
-- [ ] Fundo neutro (sem a cor do par) para reforçar o estado.
-- [ ] Palavras-chave e significado de pares bloqueados não chegam ao cliente pela API (nem por leitura direta da tabela, nem pela RPC).
+- [x] Par bloqueado em `/tenis/:slug` mostra a primeira imagem em tons de cinza com cadeado de traço fino centralizado.
+- [x] Etiquetas e texto de significado substituídos pelo aviso "Desbloqueie esse tênis para ver o que ele simboliza".
+- [x] Ícone de cadeado + texto "Bloqueado" visíveis e anunciados por leitores de tela.
+- [x] Chamada para a ação: botão para a raspadinha quando houver uma disponível, ou o horário da próxima.
+- [x] Fundo neutro (sem a cor do par) para reforçar o estado.
+- [x] Palavras-chave e significado de pares bloqueados não chegam ao cliente pela API (nem por leitura direta da tabela, nem pela RPC).
 
 ## Testes
 
-- [ ] **Automatizado:** teste de componente: com o par bloqueado, não renderiza etiquetas nem significado; mostra o aviso, o cadeado e o rótulo acessível.
-- [ ] **Automatizado (pgTAP):** usuário sem desbloqueio não recebe `meaning`/`keywords` do par.
-- [ ] **Manual:** abrir um par bloqueado e um desbloqueado no celular e comparar; inspecionar a resposta da rede para confirmar o que é enviado.
+- [x] **Automatizado:** teste de componente: com o par bloqueado, não renderiza etiquetas nem significado; mostra o aviso, o cadeado e o rótulo acessível.
+- [x] **Automatizado (pgTAP):** usuário sem desbloqueio não recebe `meaning`/`keywords` do par.
+- [x] **Manual:** abrir um par bloqueado e um desbloqueado no celular e comparar; inspecionar a resposta da rede para confirmar o que é enviado.
 
 ## Log de implementação
 
 - 2026-11-14 — PBI criada.
 - 2026-11-14 — Abordagem alterada com aprovação do usuário: significado escondido no servidor (permissão por coluna + RPC `af1_get_sneaker_detail`), em vez de opcional.
+- 2026-11-14 — Início da implementação.
+- 2026-11-14 — Implementado: estado bloqueado da tela do tênis (só a primeira imagem, em cinza, com cadeado de traço fino sobre fundo claro; "Bloqueado" com ícone no cabeçalho; aviso "Desbloqueie esse tênis para ver o que ele simboliza."; botão "Ir para a raspadinha" quando há uma disponível ou o horário da próxima; fundo neutro; sem favorito nem carrossel). No servidor: o cliente perdeu a leitura direta de `keywords`, `meaning` e `draw_weight` de `af1_sneakers` (permissão por coluna), e a RPC de detalhe devolve esses campos nulos para pares bloqueados; a API do catálogo deixou de pedir essas colunas.
+  - Arquivos: os da PBI-015, mais `src/features/catalog/{api.ts,api.test.ts}` e `src/features/closet/closet.test.tsx`
+  - Testes: pgTAP (leitura direta de `meaning` e `keywords` negada, colunas públicas legíveis, bloqueado sem significado, desbloqueado com significado); Vitest (aviso, cadeado e rótulo, sem etiquetas, sem favorito, sem carrossel, chamada para a raspadinha); navegador real em produção (Chromium e WebKit): a resposta da API para o par bloqueado traz `meaning` e `keywords` nulos e nenhuma outra resposta contém o texto; leitura direta de `meaning` pela API REST responde 42501.
+  - Observações: decisão do carrossel bloqueado mantida no padrão (só a primeira imagem). O `draw_weight` também deixou de ser público, já que o cliente não precisa dele.
