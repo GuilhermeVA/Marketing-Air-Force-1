@@ -27,6 +27,8 @@ Como cliente, quero abrir um par que desbloqueei e ver fotos bonitas dele, o que
 
 - Nota de 2026-11-14: o teste manual da PBI-004 (editar um par no Table Editor e ver a mudança no app sem novo deploy) ficou para esta PBI, que é a primeira a exibir o significado. Use `catalogApi.getSneakerBySlug` de `src/features/catalog`.
 
+- Nota de 2026-11-14 (PBI-014): incluir também o botão de favorito na tela do tênis desbloqueado, reaproveitando `createClosetApi(client).setFavorite` e o mesmo ícone de coração do closet (`src/features/closet/ClosetView.tsx`).
+
 ## Critérios de aceitação
 
 - [ ] Rota `/tenis/:slug` carrega o par pelo slug; slug inexistente mostra "Par não encontrado" com volta ao closet.

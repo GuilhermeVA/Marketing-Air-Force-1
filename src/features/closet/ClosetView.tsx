@@ -239,7 +239,9 @@ function ClosetCard({
           )}
           {!unlocked && (
             <span className="absolute inset-0 flex items-center justify-center text-graphite">
-              <LockIcon className="size-8" />
+              <span className="flex size-12 items-center justify-center rounded-full bg-paper/85">
+                <LockIcon className="size-6" />
+              </span>
             </span>
           )}
         </div>

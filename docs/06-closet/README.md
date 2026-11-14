@@ -10,5 +10,5 @@ Dar ao cliente o espaço que ele quer manter: uma vitrine com todos os pares do 
 
 | ID                                        | Título                                         | Status  | Depende de       |
 | ----------------------------------------- | ---------------------------------------------- | ------- | ---------------- |
-| [PBI-013](PBI-013-grade-do-closet.md)     | Grade do closet com bloqueados e desbloqueados | Em andamento | PBI-004, PBI-010 |
-| [PBI-014](PBI-014-favoritar-e-ordenar.md) | Favoritar e ordenar pares                      | Em andamento | PBI-013          |
+| [PBI-013](PBI-013-grade-do-closet.md)     | Grade do closet com bloqueados e desbloqueados | Concluída | PBI-004, PBI-010 |
+| [PBI-014](PBI-014-favoritar-e-ordenar.md) | Favoritar e ordenar pares                      | Concluída | PBI-013          |
