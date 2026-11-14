@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f7f4ee" />
     <link rel="preconnect" href="https://lotkxzqrloyqeyaooabp.supabase.co" crossorigin />
+    <link
+      rel="preload"
+      href="/fonts/playfair-display-latin-500.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <title>Código de Cor — Air Force 1</title>
     <meta
       name="description"
@@ -32,7 +39,25 @@
     <meta name="twitter:image" content="https://marketing-air-force-1.vercel.app/og-image.png" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Estrutura da tela inicial pintada antes do JavaScript; o React a substitui ao iniciar. -->
+      <div class="min-h-dvh bg-ivory">
+        <main class="mx-auto w-full max-w-md px-6 py-10">
+          <p class="text-xs tracking-[0.2em] text-mute uppercase">Código de Cor</p>
+          <h1 class="mt-3 text-3xl leading-tight">Sua próxima reunião merece um pouco de cor</h1>
+          <p class="mt-3 text-sm leading-relaxed text-mute">
+            Raspe o cartão para descobrir o Air Force 1 que escolheu você.
+          </p>
+          <div
+            class="mt-8 aspect-[41/31] w-full rounded-xs border border-line bg-gradient-to-br from-[#bdb8af] via-[#d9d4cb] to-[#b3aea5]"
+          ></div>
+        </main>
+      </div>
+    </div>
+    <script>
+      // Em outras rotas, não mostra a estrutura da tela inicial.
+      if (location.pathname !== '/') document.getElementById('root').innerHTML = ''
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
