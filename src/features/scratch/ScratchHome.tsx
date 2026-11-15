@@ -1,7 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link } from 'react-router'
-import { applyAccent, Button, buttonClass, Screen, Spinner, TextField } from '../../ui'
+import { m } from 'motion/react'
+import {
+  applyAccent,
+  Button,
+  buttonClass,
+  durations,
+  easeElegant,
+  Screen,
+  Spinner,
+  TextField,
+} from '../../ui'
 import { formatNextAvailable } from './api'
 import type { RedeemResult, ScratchApi, ScratchState } from './api'
 import { HomeShell } from './HomeShell'
@@ -126,7 +136,20 @@ export function ScratchHome({ api, isAnonymous, userKey }: ScratchHomeProps) {
       })
       // A revelação já está garantida no servidor (o par foi sorteado antes);
       // se a marcação falhar, a próxima abertura mostra a raspadinha de novo.
-      api.markRevealed(scratch.id).catch(() => {})
+      // A resposta traz as palavras-chave e o significado do par.
+      api
+        .markRevealed(scratch.id)
+        .then((next) =>
+          setView((current) =>
+            current.kind === 'ready' &&
+            current.state.status === 'available' &&
+            next.status === 'available' &&
+            current.state.scratch.id === next.scratch.id
+              ? { kind: 'ready', state: next }
+              : current,
+          ),
+        )
+        .catch(() => {})
     }
 
     return (
@@ -151,6 +174,39 @@ export function ScratchHome({ api, isAnonymous, userKey }: ScratchHomeProps) {
             onReveal={handleReveal}
           />
         </div>
+
+        {revealed && sneaker.meaning && (
+          <section aria-label="O que esta cor simboliza" className="mt-8">
+            <m.ul
+              className="flex flex-wrap gap-2"
+              initial="hidden"
+              animate="show"
+              variants={{
+                hidden: {},
+                show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
+              }}
+            >
+              {(sneaker.keywords ?? []).map((word) => (
+                <m.li
+                  key={word}
+                  variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }}
+                  transition={{ duration: durations.base, ease: easeElegant }}
+                  className="border border-ink px-4 py-2 text-xs tracking-[0.18em] text-ink uppercase"
+                >
+                  {word}
+                </m.li>
+              ))}
+            </m.ul>
+            <m.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: durations.base, ease: easeElegant, delay: 0.4 }}
+              className="mt-6 font-serif text-lg leading-relaxed text-graphite"
+            >
+              {sneaker.meaning}
+            </m.p>
+          </section>
+        )}
 
         {revealed && (
           <div className="mt-8 flex flex-col gap-3">

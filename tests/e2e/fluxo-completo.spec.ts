@@ -19,6 +19,10 @@ test('fluxo completo do visitante até o tênis desbloqueado', async ({ page }) 
   const heading = page.getByRole('heading', { level: 1 })
   await expect(heading).toHaveText(/^Seu par: /)
   const color = (await heading.textContent())!.replace('Seu par: ', '')
+  // Palavras-chave e significado aparecem na própria raspadinha.
+  const meaning = page.getByRole('region', { name: 'O que esta cor simboliza' })
+  await expect(meaning.getByRole('listitem')).not.toHaveCount(0)
+  await expect(meaning.locator('p')).toHaveText(/.{40,}/)
 
   await page.getByRole('link', { name: 'Guardar no meu closet' }).click()
   await expect(page.getByRole('button', { name: 'Criar conta e guardar' })).toBeDisabled()
@@ -36,7 +40,7 @@ test('fluxo completo do visitante até o tênis desbloqueado', async ({ page }) 
   await expect(page.getByText('Código copiado')).toBeVisible()
 
   await page.getByRole('link', { name: 'Ver meu closet' }).click()
-  await expect(page.getByText('1 de 6 pares')).toBeVisible()
+  await expect(page.getByText('1 de 7 pares')).toBeVisible()
   await page.getByRole('link', { name: color, exact: true }).click()
   await expect(page.getByRole('heading', { level: 1, name: color })).toBeVisible()
   await expect(

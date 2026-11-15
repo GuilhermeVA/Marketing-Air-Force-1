@@ -6,6 +6,9 @@ export type ScratchSneaker = {
   name: string
   colorName: string
   colorHex: string
+  /** Só depois de revelar; `null` enquanto a raspadinha está fechada. */
+  keywords: string[] | null
+  meaning: string | null
   image: { url: string; alt: string } | null
 }
 
@@ -62,6 +65,8 @@ export function parseScratchState(raw: unknown): ScratchState {
         name: String(k.name),
         colorName: String(k.color_name),
         colorHex: String(k.color_hex),
+        keywords: (k.keywords as string[] | null) ?? null,
+        meaning: (k.meaning as string | null) ?? null,
         image: (k.image as { url: string; alt: string } | null) ?? null,
       },
     }
@@ -95,9 +100,13 @@ export function createScratchApi(client: SupabaseClient) {
       return parseScratchState(data)
     },
 
-    async markRevealed(scratchId: string): Promise<void> {
-      const { error } = await client.rpc('af1_mark_scratch_revealed', { p_scratch_id: scratchId })
+    /** Marca como revelada e devolve a raspadinha já com o significado do par. */
+    async markRevealed(scratchId: string): Promise<ScratchState> {
+      const { data, error } = await client.rpc('af1_mark_scratch_revealed', {
+        p_scratch_id: scratchId,
+      })
       if (error) throw new ScratchError('Não foi possível registrar a revelação.', { cause: error })
+      return parseScratchState(data)
     },
 
     /** Resgata o prêmio na conta (desbloqueia o par e, no primeiro resgate, emite o cupom). */

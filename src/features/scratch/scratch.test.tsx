@@ -116,7 +116,16 @@ function fakeApi(state: ScratchState | Error) {
       if (state instanceof Error) throw state
       return state
     }),
-    markRevealed: vi.fn(async () => {}),
+    markRevealed: vi.fn(async () =>
+      parseScratchState({
+        ...rawAvailable('revelada'),
+        sneaker: {
+          ...rawAvailable('revelada').sneaker,
+          keywords: ['Riqueza', 'Prosperidade'],
+          meaning: 'O dourado é a conquista que se vê de longe.',
+        },
+      }),
+    ),
     redeem: vi.fn(async () => redeemed(true)),
     redeemCode: vi.fn(async (code: string) =>
       code === 'admin' ? parseScratchState(rawAvailable('livre')) : null,
@@ -140,6 +149,10 @@ describe('ScratchHome', () => {
     await user.click(await screen.findByRole('button', { name: 'Revelar' }))
     expect(api.markRevealed).toHaveBeenCalledWith('s-1')
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Seu par: Dourado')
+    expect(
+      await screen.findByText('O dourado é a conquista que se vê de longe.'),
+    ).toBeInTheDocument()
+    expect(screen.getByText('Riqueza')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Guardar no meu closet' })).toHaveAttribute(
       'href',
       '/entrar?modo=cadastro&voltar=/',

@@ -4,7 +4,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path = public, extensions;
 
-select plan(17);
+select plan(20);
 
 insert into auth.users (id, email, is_anonymous, aud, role) values
   ('00000000-0000-0000-0000-0000000000a0', null, true, 'authenticated', 'authenticated'),
@@ -24,16 +24,22 @@ select pg_temp.as_user('00000000-0000-0000-0000-0000000000a0', true);
 create temp table r1 as select public.af1_get_or_create_scratch() as v;
 select is((select v ->> 'status' from r1), 'available', 'anônimo recebe uma raspadinha');
 select ok((select v #>> '{sneaker,image,url}' from r1) is not null, 'resposta traz a imagem do par');
+select ok((select v #> '{sneaker,meaning}' = 'null'::jsonb and v #> '{sneaker,keywords}' = 'null'::jsonb from r1),
+  'antes de revelar, o significado não vem na resposta');
 select is(
   (select public.af1_get_or_create_scratch() #>> '{scratch,id}'),
   (select v #>> '{scratch,id}' from r1),
   'segunda chamada devolve a mesma raspadinha (reserva)');
 
 select is(
-  (select public.af1_mark_scratch_revealed(((select v #>> '{scratch,id}' from r1))::uuid) ->> 'status'),
+  (select public.af1_mark_scratch_revealed(((select v #>> '{scratch,id}' from r1))::uuid) #>> '{scratch,status}'),
   'revelada', 'marcar como revelada muda livre -> revelada');
+select ok((select public.af1_get_or_create_scratch() #>> '{sneaker,meaning}') is not null,
+  'depois de revelar, o significado vem na resposta');
+select ok(jsonb_array_length((select public.af1_get_or_create_scratch() #> '{sneaker,keywords}')) > 0,
+  'depois de revelar, as palavras-chave vêm na resposta');
 select is(
-  (select public.af1_mark_scratch_revealed(((select v #>> '{scratch,id}' from r1))::uuid) ->> 'status'),
+  (select public.af1_mark_scratch_revealed(((select v #>> '{scratch,id}' from r1))::uuid) #>> '{scratch,status}'),
   'revelada', 'marcar de novo é idempotente');
 select is(
   (select public.af1_get_or_create_scratch() #>> '{scratch,status}'),
