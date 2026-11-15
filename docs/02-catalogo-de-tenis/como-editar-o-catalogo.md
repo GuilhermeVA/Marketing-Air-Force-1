@@ -47,10 +47,16 @@ Para usar imagens próprias:
 3. Clique na imagem enviada, depois em **Get URL**, e copie a URL pública.
 4. Cole essa URL no campo `url` da linha correspondente em `af1_sneaker_images`.
 
+As imagens atuais ficam em `af1-sneakers/v1/<slug>/`: `1.webp` (vista lateral), `2.webp` (lateral invertida), `3.webp` (zoom na frente) e `modelo.webp`.
+
+### Foto de modelo
+
+A foto de um modelo usando o par aparece abaixo do texto de significado, apenas para quem já desbloqueou o par. Para trocá-la, envie a imagem ao bucket e cole a URL pública no campo `model_image_url` da tabela `af1_sneakers`. Deixe o campo vazio para não mostrar foto. O ideal é uma imagem vertical na proporção 5:7 (por exemplo, 900 × 1260 px).
+
 Use renders ou ilustrações próprias. Evite fotos oficiais da marca, porque a campanha é acadêmica e simulada.
 
 ## Cuidados
 
 - Apagar um par apaga também as imagens dele. Para esconder um par, prefira desmarcar `active`.
 - O app não tem tela de administração: todas as edições são feitas pelo painel.
-- O arquivo `supabase/seed.sql` serve só para popular um banco novo. Ele **não** sobrescreve edições feitas no painel.
+- O catálogo inicial (7 cores) é criado pela migração `supabase/migrations/20261115040000_af1_catalogo_fotos.sql`. Edições feitas depois pelo painel não são sobrescritas.

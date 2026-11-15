@@ -13,6 +13,8 @@ export type SneakerDetail = {
   /** Só para pares desbloqueados; `null` quando bloqueado. */
   keywords: string[] | null
   meaning: string | null
+  /** Foto de modelo usando o par; só para pares desbloqueados. */
+  modelImageUrl: string | null
   images: SneakerImage[]
 }
 
@@ -30,6 +32,7 @@ export function parseSneakerDetail(raw: unknown): SneakerDetail | null {
     isFavorite: v.is_favorite === true,
     keywords: (v.keywords as string[] | null) ?? null,
     meaning: (v.meaning as string | null) ?? null,
+    modelImageUrl: (v.model_image_url as string | null) ?? null,
     images: ((v.images as SneakerImage[] | null) ?? [])
       .slice()
       .sort((a, b) => a.position - b.position),

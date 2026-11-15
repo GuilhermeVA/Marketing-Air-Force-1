@@ -233,6 +233,7 @@ export type Database = {
           id: string
           keywords: string[]
           meaning: string
+          model_image_url: string | null
           name: string
           rarity: string
           slug: string
@@ -247,6 +248,7 @@ export type Database = {
           id?: string
           keywords?: string[]
           meaning?: string
+          model_image_url?: string | null
           name: string
           rarity?: string
           slug: string
@@ -261,6 +263,7 @@ export type Database = {
           id?: string
           keywords?: string[]
           meaning?: string
+          model_image_url?: string | null
           name?: string
           rarity?: string
           slug?: string

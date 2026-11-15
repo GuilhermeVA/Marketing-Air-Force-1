@@ -89,8 +89,9 @@ set local role authenticated;
 select pg_temp.as_user('00000000-0000-0000-0000-0000000000d0', false);
 select is((select public.af1_get_or_create_scratch() ->> 'status'), 'all_unlocked', 'coleção completa: all_unlocked');
 
--- Raridade: o par raro sai bem menos que cada comum.
+-- Raridade: o par raro sai bem menos que cada comum (pesos ajustados só neste teste).
 reset role;
+update public.af1_sneakers set draw_weight = case slug when 'dourado' then 5 else 30 end;
 select ok(
   (with draws as (
      select s.slug
@@ -99,7 +100,7 @@ select ok(
      join public.af1_sneakers s on s.id = d.id
    )
    select (select count(*) from draws where slug = 'dourado')
-        < (select count(*) from draws where slug = 'azul-marinho') / 2),
+        < (select count(*) from draws where slug = 'azul') / 2),
   'em 3000 sorteios o raro (peso 5) sai menos da metade do comum (peso 30)');
 
 select * from finish();

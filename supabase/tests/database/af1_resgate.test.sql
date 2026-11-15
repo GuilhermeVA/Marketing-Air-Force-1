@@ -15,7 +15,7 @@ insert into public.af1_scratches (id, user_id, sneaker_id, status, created_at)
 select v.id::uuid, v.uid::uuid, (select id from public.af1_sneakers where slug = v.slug), v.status, v.created_at
 from (values
   ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-0000000000e1', 'dourado', 'revelada', now() - interval '1 day'),
-  ('10000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-0000000000e2', 'laranja', 'revelada', now())
+  ('10000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-0000000000e2', 'rosa', 'revelada', now())
 ) as v (id, uid, slug, status, created_at);
 
 create function pg_temp.as_user(p_id text, p_anon boolean) returns void language sql as $$
@@ -47,7 +47,7 @@ select is((select count(*)::int from public.af1_coupons), 1, 'não duplica cupom
 reset role;
 insert into public.af1_scratches (id, user_id, sneaker_id, status)
 select '10000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-0000000000e1', id, 'livre'
-from public.af1_sneakers where slug = 'vinho';
+from public.af1_sneakers where slug = 'roxo';
 set local role authenticated;
 select is(
   (select public.af1_redeem_scratch('10000000-0000-0000-0000-000000000002') -> 'coupon'),

@@ -22,6 +22,7 @@ const raw = (unlocked: boolean) => ({
   is_favorite: false,
   keywords: unlocked ? ['Riqueza', 'Prosperidade'] : null,
   meaning: unlocked ? 'O dourado é a conquista que se vê de longe.' : null,
+  model_image_url: unlocked ? '/dourado-modelo.webp' : null,
   images: [3, 1, 2].map((n) => ({
     id: `i${n}`,
     url: `/d-${n}.svg`,
@@ -66,6 +67,9 @@ describe('SneakerDetailView — desbloqueado (PBI-015)', () => {
     expect(screen.getByText('O dourado é a conquista que se vê de longe.')).toBeInTheDocument()
     expect(await screen.findByRole('img', { name: 'Dourado 1' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: '‹ Closet' })).toHaveAttribute('href', '/closet')
+    expect(
+      screen.getByRole('img', { name: 'Modelo de terno usando o Air Force 1 Dourado' }),
+    ).toHaveAttribute('src', '/dourado-modelo.webp')
   })
 
   it('navega pelo carrossel com setas, teclado e miniaturas', async () => {
@@ -120,6 +124,7 @@ describe('SneakerDetailView — bloqueado (PBI-016)', () => {
     expect(screen.queryByText('Riqueza')).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Favoritar' })).not.toBeInTheDocument()
     expect(screen.queryByRole('region')).not.toBeInTheDocument()
+    expect(screen.queryByRole('img', { name: /^Modelo/ })).not.toBeInTheDocument()
   })
 
   it('leva à raspadinha quando há uma disponível', async () => {

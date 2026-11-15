@@ -176,6 +176,20 @@ function Unlocked({
 
       <p className="mt-6 font-serif text-lg leading-relaxed text-graphite">{sneaker.meaning}</p>
 
+      {sneaker.modelImageUrl && (
+        <figure className="mt-8">
+          <img
+            src={sneaker.modelImageUrl}
+            alt={`Modelo de terno usando o ${sneaker.name}`}
+            width={900}
+            height={1260}
+            loading="lazy"
+            decoding="async"
+            className="aspect-[5/7] w-full border border-line bg-paper object-cover"
+          />
+        </figure>
+      )}
+
       <div className="mt-10 flex items-center gap-3 border-t border-line pt-6">
         <Button variant="secondary" onClick={toggleFavorite} aria-pressed={favorite}>
           <HeartIcon filled={favorite} />
