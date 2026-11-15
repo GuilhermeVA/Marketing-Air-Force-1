@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import type { FormEvent } from 'react'
 import { Link } from 'react-router'
-import { applyAccent, Button, buttonClass, Screen, Spinner } from '../../ui'
+import { applyAccent, Button, buttonClass, Screen, Spinner, TextField } from '../../ui'
 import { formatNextAvailable } from './api'
 import type { RedeemResult, ScratchApi, ScratchState } from './api'
 import { HomeShell } from './HomeShell'
@@ -206,6 +207,14 @@ export function ScratchHome({ api, isAnonymous, userKey }: ScratchHomeProps) {
           Sua próxima raspadinha libera{' '}
           {state.nextAvailableAt ? formatNextAvailable(state.nextAvailableAt) : 'em breve'}.
         </p>
+        <BonusCodeForm
+          redeemCode={api.redeemCode}
+          onUnlocked={(next) => {
+            redeemedFor.current = null
+            setRedeem({ kind: 'idle' })
+            setView({ kind: 'ready', state: next })
+          }}
+        />
         <Link to="/closet" className={`mt-8 ${linkClass}`}>
           Ver meu closet
         </Link>
@@ -239,5 +248,62 @@ export function ScratchHome({ api, isAnonymous, userKey }: ScratchHomeProps) {
         Ver meu closet
       </Link>
     </Screen>
+  )
+}
+
+/** Campo para resgatar um código que libera uma raspadinha extra na hora. */
+function BonusCodeForm({
+  redeemCode,
+  onUnlocked,
+}: {
+  redeemCode: ScratchApi['redeemCode']
+  onUnlocked: (state: ScratchState) => void
+}) {
+  const [code, setCode] = useState('')
+  const [status, setStatus] = useState<'idle' | 'pending' | 'invalid' | 'error'>('idle')
+
+  async function submit(e: FormEvent) {
+    e.preventDefault()
+    if (!code.trim()) return
+    setStatus('pending')
+    try {
+      const next = await redeemCode(code)
+      if (next) onUnlocked(next)
+      else setStatus('invalid')
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  return (
+    <form onSubmit={submit} className="mt-10 border-t border-line pt-6" noValidate>
+      <TextField
+        label="Tem um código?"
+        value={code}
+        onChange={(e) => {
+          setCode(e.target.value)
+          if (status === 'invalid' || status === 'error') setStatus('idle')
+        }}
+        autoComplete="off"
+        autoCapitalize="none"
+        spellCheck={false}
+        error={
+          status === 'invalid'
+            ? 'Código inválido.'
+            : status === 'error'
+              ? 'Não conseguimos validar agora. Tente de novo.'
+              : undefined
+        }
+      />
+      <Button
+        type="submit"
+        variant="secondary"
+        fullWidth
+        className="mt-4"
+        disabled={status === 'pending'}
+      >
+        {status === 'pending' ? 'Validando…' : 'Liberar raspadinha'}
+      </Button>
+    </form>
   )
 }

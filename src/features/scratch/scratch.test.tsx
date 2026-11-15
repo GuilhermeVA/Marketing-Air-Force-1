@@ -118,6 +118,9 @@ function fakeApi(state: ScratchState | Error) {
     }),
     markRevealed: vi.fn(async () => {}),
     redeem: vi.fn(async () => redeemed(true)),
+    redeemCode: vi.fn(async (code: string) =>
+      code === 'admin' ? parseScratchState(rawAvailable('livre')) : null,
+    ),
   } satisfies ScratchApi
 }
 
@@ -183,6 +186,33 @@ describe('ScratchHome', () => {
     const user = userEvent.setup()
     await user.click(await screen.findByRole('button', { name: 'Tentar de novo' }))
     expect(api.getOrCreate).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('ScratchHome — código de raspadinha extra', () => {
+  const limit = (): ScratchState => ({
+    status: 'unavailable',
+    reason: 'daily_limit',
+    nextAvailableAt: new Date(Date.now() + 3_600_000).toISOString(),
+  })
+
+  it('código válido libera a raspadinha na hora', async () => {
+    const api = fakeApi(limit())
+    renderHome(api, false)
+    const user = userEvent.setup()
+    await user.type(await screen.findByLabelText('Tem um código?'), 'admin')
+    await user.click(screen.getByRole('button', { name: 'Liberar raspadinha' }))
+    expect(api.redeemCode).toHaveBeenCalledWith('admin')
+    expect(await screen.findByRole('button', { name: 'Revelar' })).toBeInTheDocument()
+  })
+
+  it('código inválido mostra erro e mantém a tela', async () => {
+    renderHome(fakeApi(limit()), false)
+    const user = userEvent.setup()
+    await user.type(await screen.findByLabelText('Tem um código?'), 'xyz')
+    await user.click(screen.getByRole('button', { name: 'Liberar raspadinha' }))
+    expect(await screen.findByText('Código inválido.')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Por hoje é só' })).toBeInTheDocument()
   })
 })
 

@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      af1_bonus_code_uses: {
+        Row: {
+          code: string
+          id: string
+          scratch_id: string | null
+          used_at: string
+          user_id: string
+        }
+        Insert: {
+          code: string
+          id?: string
+          scratch_id?: string | null
+          used_at?: string
+          user_id: string
+        }
+        Update: {
+          code?: string
+          id?: string
+          scratch_id?: string | null
+          used_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "af1_bonus_code_uses_code_fkey"
+            columns: ["code"]
+            isOneToOne: false
+            referencedRelation: "af1_bonus_codes"
+            referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "af1_bonus_code_uses_scratch_id_fkey"
+            columns: ["scratch_id"]
+            isOneToOne: false
+            referencedRelation: "af1_scratches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      af1_bonus_codes: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          description: string | null
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          description?: string | null
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          description?: string | null
+        }
+        Relationships: []
+      }
       af1_coupons: {
         Row: {
           code: string
@@ -260,6 +320,7 @@ export type Database = {
         Returns: Json
       }
       af1_new_coupon_code: { Args: never; Returns: string }
+      af1_redeem_bonus_code: { Args: { p_code: string }; Returns: Json }
       af1_redeem_scratch: { Args: { p_scratch_id: string }; Returns: Json }
       af1_scratch_payload: {
         Args: {

@@ -87,6 +87,14 @@ export function createScratchApi(client: SupabaseClient) {
       return parseScratchState(data)
     },
 
+    /** Resgata um código de raspadinha extra. `null` quando o código não vale. */
+    async redeemCode(code: string): Promise<ScratchState | null> {
+      const { data, error } = await client.rpc('af1_redeem_bonus_code', { p_code: code })
+      if (error) throw new ScratchError('Não foi possível validar o código.', { cause: error })
+      if ((data as Json | null)?.status === 'invalid_code') return null
+      return parseScratchState(data)
+    },
+
     async markRevealed(scratchId: string): Promise<void> {
       const { error } = await client.rpc('af1_mark_scratch_revealed', { p_scratch_id: scratchId })
       if (error) throw new ScratchError('Não foi possível registrar a revelação.', { cause: error })
