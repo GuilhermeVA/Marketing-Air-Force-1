@@ -33,12 +33,15 @@ test('fluxo completo do visitante até o tênis desbloqueado', async ({ page }) 
   await page.getByRole('button', { name: 'Criar conta e guardar' }).click()
 
   await expect(page.getByText(/Guardado no seu closet/)).toBeVisible()
-  await page.getByRole('link', { name: 'Ver meu cupom' }).click()
+  await page.getByRole('link', { name: 'Ver meu closet' }).click()
+  await expect(page.getByText('1 de 7 pares')).toBeVisible()
+
+  // O cupom é descoberto a partir do closet.
+  await page.getByRole('link', { name: 'Meu cupom' }).click()
   await expect(page.getByText(/^AF1-[A-HJ-NP-Z2-9]{4}$/)).toBeVisible()
   await expect(page.getByText('10%')).toBeVisible()
   await page.getByRole('button', { name: 'Copiar código' }).click()
   await expect(page.getByText('Código copiado')).toBeVisible()
-
   await page.getByRole('link', { name: 'Ver meu closet' }).click()
   await expect(page.getByText('1 de 7 pares')).toBeVisible()
   await page.getByRole('link', { name: color, exact: true }).click()

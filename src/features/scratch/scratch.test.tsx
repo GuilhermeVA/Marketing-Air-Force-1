@@ -230,15 +230,16 @@ describe('ScratchHome — código de raspadinha extra', () => {
 })
 
 describe('ScratchHome — resgate (PBI-011)', () => {
-  it('conta logada: ao revelar, resgata sozinha e oferece o cupom', async () => {
+  it('conta logada: ao revelar, resgata sozinha e leva ao closet (mesmo ganhando cupom)', async () => {
     const api = fakeApi(parseScratchState(rawAvailable('livre')))
     renderHome(api, false)
     const user = userEvent.setup()
     await user.click(await screen.findByRole('button', { name: 'Revelar' }))
-    expect(await screen.findByRole('link', { name: 'Ver meu cupom' })).toHaveAttribute(
+    expect(await screen.findByRole('link', { name: 'Ver meu closet' })).toHaveAttribute(
       'href',
-      '/cupom',
+      '/closet',
     )
+    expect(screen.queryByRole('link', { name: 'Ver meu cupom' })).not.toBeInTheDocument()
     expect(api.redeem).toHaveBeenCalledTimes(1)
     expect(api.redeem).toHaveBeenCalledWith('s-1')
     expect(screen.getByText(/Guardado no seu closet/)).toBeInTheDocument()
@@ -269,7 +270,7 @@ describe('ScratchHome — resgate (PBI-011)', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('O prêmio continua reservado')
     const user = userEvent.setup()
     await user.click(screen.getByRole('button', { name: 'Tentar de novo' }))
-    expect(await screen.findByRole('link', { name: 'Ver meu cupom' })).toBeInTheDocument()
+    expect(await screen.findByRole('link', { name: 'Ver meu closet' })).toBeInTheDocument()
     expect(api.redeem).toHaveBeenCalledTimes(2)
   })
 })

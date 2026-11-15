@@ -223,14 +223,10 @@ export function ScratchHome({ api, isAnonymous, userKey }: ScratchHomeProps) {
               <>
                 <p role="status" className="text-sm text-graphite">
                   Guardado no seu closet.
-                  {redeem.result.coupon &&
-                    ` E você ganhou um cupom de ${redeem.result.coupon.discountPercent}%.`}
                 </p>
-                <Link
-                  to={redeem.result.coupon ? '/cupom' : '/closet'}
-                  className={buttonClass('primary', true)}
-                >
-                  {redeem.result.coupon ? 'Ver meu cupom' : 'Ver meu closet'}
+                {/* O closet é o destino principal; o cupom fica acessível a partir dele. */}
+                <Link to="/closet" className={buttonClass('primary', true)}>
+                  Ver meu closet
                 </Link>
               </>
             ) : redeem.kind === 'error' ? (
