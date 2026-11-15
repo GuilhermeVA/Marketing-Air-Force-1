@@ -1,15 +1,17 @@
 import type { ComponentType } from 'react'
 import type { RouteObject } from 'react-router'
 import { RequireSession } from './features/auth'
+import { loadChunk } from './lib/loadChunk'
 import { HomeShell } from './features/scratch/HomeShell'
 import { HomePage } from './pages/HomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { RouteError } from './pages/RouteError'
 import { RouteLoading } from './pages/RouteLoading'
 
 // A raspadinha (porta de entrada) vai no pacote principal; as demais telas
 // são baixadas sob demanda.
 const page = (load: () => Promise<{ default: ComponentType }>): Pick<RouteObject, 'lazy'> => ({
-  lazy: async () => ({ Component: (await load()).default }),
+  lazy: async () => ({ Component: (await loadChunk(load)).default }),
 })
 
 const devRoutes: RouteObject[] = import.meta.env.DEV
@@ -26,6 +28,7 @@ const devRoutes: RouteObject[] = import.meta.env.DEV
 export const routes: RouteObject[] = [
   {
     HydrateFallback: RouteLoading,
+    ErrorBoundary: RouteError,
     children: [
       {
         // Telas que dependem de sessão (anônima ou com conta).

@@ -13,13 +13,14 @@ import {
   Screen,
   Spinner,
 } from '../../ui'
+import { loadChunk } from '../../lib/loadChunk'
 import type { ClosetApi } from '../closet/api'
 import { formatNextAvailable } from '../scratch/api'
 import type { ScratchState } from '../scratch/api'
 import type { SneakerApi, SneakerDetail } from './api'
 
 // O carrossel (Embla) só é baixado quando a tela do tênis abre.
-const Carousel = lazy(() => import('./Carousel'))
+const Carousel = lazy(() => loadChunk(() => import('./Carousel')))
 
 type Props = {
   slug: string
